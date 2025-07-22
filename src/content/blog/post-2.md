@@ -1,70 +1,98 @@
 ---
-title: Building an Impressive Front-End Developer Portfolio
-excerpt: In the competitive world of front-end development, a strong portfolio is your ticket to showcasing your skills, making a lasting impression on potential employers or clients, and advancing your career.
-publishDate: 'October 5 2023'
+title: Cómo Instalar y Configurar Sudo en un Servidor con Debian
+excerpt: En Debian, sudo es una herramienta vital que permite a los usuarios ejecutar comandos con privilegios de administrador de manera controlada. Aprende a instalarlo y configurarlo paso a paso.
+publishDate: 'Enero 12 2025'
 tags:
-  - Web
-  - Web development
+  - Linux
+  - Debian
+  - DevOps
+  - Administración de sistemas
 seo:
   image:
     src: '/post-2.jpg'
-    alt: Half open laptop on a desk
+    alt: Terminal de Linux mostrando comandos sudo
 ---
 
-![Half open laptop on a desk](/post-2.jpg)
+![Terminal de Linux mostrando comandos sudo](/post-2.jpg)
 
-**Note:** This post was created using Chat GPT to demonstrate the features of the _[Dante Astro.js theme functionality](https://justgoodui.com/astro-themes/dante/)_.
+En Debian, **sudo** es una herramienta vital que permite a los usuarios ejecutar comandos con privilegios de administrador de manera controlada. Si eres nuevo en Debian o necesitas agregar un usuario al grupo de sudo, este tutorial te guiará paso a paso en el proceso de instalación y configuración.
 
-In the competitive world of front-end development, a strong portfolio is your ticket to showcasing your skills, making a lasting impression on potential employers or clients, and advancing your career. Your portfolio is your digital business card, and it should be a reflection of your talent, creativity, and expertise. In this post, we'll walk you through the steps to create an impressive front-end developer portfolio that will help you stand out in the crowd.
+## ¿Por qué Necesitamos sudo?
 
-## 1. Showcase a Diverse Range of Projects
+En sistemas Linux, sudo permite ejecutar tareas administrativas sin necesidad de acceder directamente a la cuenta de superusuario (root). Esto es útil por razones de seguridad, ya que limita el acceso a comandos sensibles a solo los usuarios que necesitan esos permisos.
 
-Your portfolio should be a testament to your versatility. Include a variety of projects that demonstrate your skills in different areas of front-end development. Consider including projects like:
+Si estás utilizando Debian y solo has intalado el sistema base no tienes configurado sudo en tu sistema, o si deseas agregar tu usuario al grupo de sudo para tener acceso administrativo, sigue estos sencillos pasos.
 
-- **Responsive Websites:** Showcase your ability to create websites that adapt seamlessly to various screen sizes and devices.
+## Paso 1: Deshabilitar el repositorio del CD-ROM
 
-- **Interactive Web Applications:** Feature web applications that engage users with dynamic features and functionalities.
+Puedes hacerlo ejecutando el siguiente comando, que deshabilita cualquier entrada relacionada con el CD-ROM sin necesidad de editar el archivo sources.list manualmente.
 
-- **E-commerce Websites:** If you've worked on e-commerce sites, include them to demonstrate your expertise in handling complex web development tasks.
+```bash
+su -c "sed -i '/cdrom:/s/^/#/' /etc/apt/sources.list"
+```
 
-- **Open Source Contributions:** Highlight your involvement in open-source projects or contributions to online coding communities.
+## Paso 2: Instalar sudo
 
-## 2. Highlight Your Coding Skills
+Para empezar, asegúrate de que sudo esté instalado en tu sistema Debian. Si no lo está, puedes instalarlo fácilmente usando el siguiente comando en la terminal.
 
-Your portfolio should provide a clear view of your coding proficiency. Consider the following:
+Abre una terminal e ingresa como usuario root o como un usuario con privilegios administrativos.
 
-- **Clean and Organized Code:** Present your code in a clean and well-organized manner. Use proper indentation, comments, and coding standards.
+Si ya tienes acceso como root, simplemente omite el paso de sudo y usa el siguiente comando para instalar sudo:
 
-- **Use of Version Control:** Showcase your use of version control systems like Git and GitHub to demonstrate your collaboration and code management skills.
+```bash
+su -c "apt update && apt install sudo passwd"
+```
 
-- **Code Samples:** Include snippets of code from your projects to give visitors an insight into your coding style and problem-solving abilities.
+Si ya tienes instalado sudo en tu cuenta, simplemente puedes ejecutar:
 
-## 3. Emphasize Responsive Design
+```bash
+sudo apt update && sudo apt install sudo passwd
+```
 
-As a front-end developer, responsive design is paramount. Ensure that your portfolio itself is a shining example of responsive design. It should look and function flawlessly on a variety of devices, including desktops, tablets, and smartphones.
+Esto actualizará los repositorios y procederá con la instalación del paquete sudo.
 
-## 4. User Experience (UX) Matters
+## Paso 3: Agregar un Usuario al Grupo sudo
 
-Front-end development is not just about writing code; it's about creating a great user experience. Explain your thought process behind the user interface (UI) and UX decisions you made in your projects. Discuss how you optimized performance and accessibility.
+Una vez que hayas instalado sudo, el siguiente paso es agregar tu usuario al grupo sudo para que puedas ejecutar comandos con privilegios elevados:
 
-## 5. Document Your Projects
 
-Accompany each project with a detailed description. Explain the project's goals, your role in it, the technologies and tools you used, and any challenges you overcame. This documentation provides context and depth to your work.
+```bash
+su -c "/usr/sbin/usermod -aG sudo $USER"
+```
 
-## 6. Regularly Update Your Portfolio
+Este comando agrega tu usuario actual al grupo sudo sin eliminarlo de otros grupos a los que ya pertenece.
 
-A stagnant portfolio can give the impression of inactivity or lack of progress. Regularly update your portfolio with your latest work and projects. Remove outdated or less impressive work to keep your portfolio relevant and impactful.
 
-## 7. Test and Optimize Load Times
+Una vez que hayas agregado el usuario, deberás **cerrar sesión y volver a iniciarla** para que los cambios tengan efecto.
 
-Slow-loading websites can turn visitors away. Ensure your portfolio loads quickly by optimizing images and using proper techniques to minimize load times.
+## Paso 4: Verificar que el Usuario Está en el Grupo sudo
 
-## 8. Seek Feedback
+Para confirmar que tu usuario ha sido agregado correctamente al grupo sudo, puedes ejecutar el siguiente comando:
 
-Before finalizing your portfolio, seek feedback from peers, mentors, or online communities. Constructive criticism can help you refine your portfolio and make it even more impressive.
+```bash
+groups $USER
+```
 
-## 9. Personalize Your Portfolio
+Este comando te mostrará todos los grupos a los que pertenece tu usuario. Si todo está correcto, `sudo` aparecerá en la lista.
 
-Your portfolio is not just about your work; it's also about you. Add a personal touch by including an **"About Me"** section that tells your story, your passions, and what makes you unique as a front-end developer.
+## Paso 5: Probar sudo
 
-Remember, your front-end developer portfolio is an ongoing project. Keep refining it, stay up-to-date with the latest trends, and let it evolve as your skills and experience grow. An impressive portfolio not only serves as a testament to your abilities but also opens doors to exciting opportunities in the world of front-end development.
+Finalmente, puedes probar que sudo funciona correctamente ejecutando un comando simple que requiera privilegios de administrador. Por ejemplo:
+
+```bash
+newgrp sudo
+sudo whoami
+```
+
+El comando anterior debería devolver `root`, lo que indica que tienes privilegios de administrador.
+
+### Resumen de comandos:
+
+```bash
+su -c "sed -i '/cdrom:/s/^/#/' /etc/apt/sources.list"
+su -c "apt update && apt install sudo passwd"
+su -c "/usr/sbin/usermod -aG sudo $USER"
+groups $USER
+newgrp sudo
+sudo whoami
+```
