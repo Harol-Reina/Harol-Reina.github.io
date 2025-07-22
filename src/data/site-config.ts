@@ -41,8 +41,8 @@ export type SiteConfig = {
 const siteConfig: SiteConfig = {
     website: 'https://Harol-Reina.github.io',
     title: 'Harol Reina',
-    subtitle: 'Minimal Astro.js theme',
-    description: 'Astro.js and Tailwind CSS theme for blog and portfolio by justgoodui.com',
+    subtitle: 'DevOps Engineer & Backend Developer',
+    description: '¡Bienvenido a mi sitio web! Soy Harol Reina, un ingeniero DevOps especializado en desarrollo backend con .NET, Python y Node.js. Aquí comparto tips, tutoriales y mejores prácticas sobre Linux, DevOps, CI/CD, desarrollo backend y automatización. Explora mis proyectos y conocimientos técnicos.',
     image: {
         src: '/dante-preview.jpg',
         alt: 'Dante - Astro.js and Tailwind CSS theme'
@@ -59,6 +59,10 @@ const siteConfig: SiteConfig = {
         {
             text: 'Blog',
             href: '/blog'
+        },
+        {
+            text: 'Currículum',
+            href: '/resume'
         },
         {
             text: 'Tags',
@@ -85,35 +89,39 @@ const siteConfig: SiteConfig = {
     ],
     socialLinks: [
         {
-            text: 'Dribbble',
-            href: 'https://dribbble.com/'
+            text: 'GitHub',
+            href: 'https://github.com/Harol-Reina'
         },
         {
-            text: 'Instagram',
-            href: 'https://instagram.com/'
+            text: 'LinkedIn',
+            href: 'https://www.linkedin.com/in/harol-alfonso-reina-herrera-53199b34'
         },
         {
             text: 'X/Twitter',
-            href: 'https://twitter.com/'
+            href: 'https://x.com/HaroldR1975'
         }
     ],
     hero: {
-        title: 'Hi There & Welcome to My Corner of the Web!',
-        text: "I'm **Ethan Donovan**, a web developer at Amazing Studio, dedicated to the realms of collaboration and artificial intelligence. My approach involves embracing intuition, conducting just enough research, and leveraging aesthetics as a catalyst for exceptional products. I have a profound appreciation for top-notch software, visual design, and the principles of product-led growth. Feel free to explore some of my coding endeavors on <a href='https://github.com/JustGoodUI/dante-astro-theme'>GitHub</a> or follow me on <a href='https://twitter.com/justgoodui'>Twitter/X</a>.",
+        title: '¡Hola! Bienvenido a mi espacio técnico',
+        text: "Soy **Harol Reina**, un ingeniero DevOps con amplia experiencia en desarrollo backend utilizando **.NET** y **Python**. Mi pasión es automatizar procesos, optimizar infraestructuras y compartir conocimiento técnico. En este sitio encontrarás tips, tutoriales y mejores prácticas sobre **Linux**, **DevOps**, **CI/CD**, desarrollo backend y automatización. Conéctate conmigo en <a href='https://github.com/Harol-Reina'>GitHub</a> para ver mis proyectos o sígueme en mis redes sociales.",
         image: {
             src: '/hero.jpeg',
-            alt: 'A person sitting at a desk in front of a computer'
+            alt: 'DevOps Engineer trabajando en infraestructura y desarrollo'
         },
         actions: [
             {
-                text: 'Get in Touch',
+                text: 'Ver mis proyectos',
+                href: '/projects'
+            },
+            {
+                text: 'Contacto',
                 href: '/contact'
             }
         ]
     },
     subscribe: {
-        title: 'Subscribe to Dante Newsletter',
-        text: 'One update per week. All the latest posts directly in your inbox.',
+        title: 'Suscríbete a mis actualizaciones técnicas',
+        text: 'Recibe los últimos tips sobre DevOps, Linux, CI/CD y desarrollo backend directamente en tu correo.',
         formUrl: '#'
     },
     postsPerPage: 8,
