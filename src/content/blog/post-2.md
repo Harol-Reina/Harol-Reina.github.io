@@ -1,7 +1,7 @@
 ---
 title: Cómo Instalar y Configurar Sudo en un Servidor con Debian
 excerpt: En Debian, sudo es una herramienta vital que permite a los usuarios ejecutar comandos con privilegios de administrador de manera controlada. Aprende a instalarlo y configurarlo paso a paso.
-publishDate: 'Enero 12 2025'
+publishDate: 'January 22 2025'
 tags:
   - Linux
   - Debian
