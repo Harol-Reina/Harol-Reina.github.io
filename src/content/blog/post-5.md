@@ -1,7 +1,7 @@
 ---
 title: 'Guía Completa: Configurar SSH Sin Contraseña en Debian de Forma Segura'
 excerpt: 'Aprende a configurar el acceso SSH sin contraseña utilizando claves públicas y privadas en Debian. Incluye configuraciones de seguridad avanzadas, troubleshooting y mejores prácticas para administradores de sistemas.'
-publishDate: 'July 22 2025'
+publishDate: 'February 01 2025'
 tags:
   - SSH
   - Seguridad
