@@ -1,0 +1,32 @@
+---
+import type { GetStaticPathsOptions, Page } from 'astro';
+import { type CollectionEntry, getCollection } from 'astro:content';
+import IacPreview from '../../components/IacPreview.astro';
+import Pagination from '../../components/Pagination.astro';
+import Subscribe from '../../components/Subscribe.astro';
+import siteConfig from '../../data/site-config';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { sortItemsByDateDesc } from '../../utils/data-utils';
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+    const iacList = (await getCollection('iacList')).sort(sortItemsByDateDesc);
+    return paginate(iacList, { pageSize: siteConfig.projectsPerPage || 6 });
+}
+
+type Props = { page: Page<CollectionEntry<'iacList'>> };
+
+const { page } = Astro.props;
+const blog = page.data;
+---
+
+<BaseLayout
+    title="Infrastructure as Code"
+    description="Guías completas sobre Infrastructure as Code con Terraform, Ansible, CloudFormation y mejores prácticas de automatización de infraestructura para DevOps."
+    image={{ src: '/post-8.jpg', alt: 'Infrastructure as Code' }}
+    showHeader={false}
+>
+    <h1 class="mb-12 text-2xl leading-tight font-serif italic sm:mb-16 sm:text-4xl">Infrastructure como codigo</h1>
+    {blog.map((post) => <IacPreview post={post} class="mb-10 sm:mb-12" />)}
+    <Pagination page={page} class="my-16 sm:my-24" />
+    <Subscribe class="my-16 sm:my-24" />
+</BaseLayout>

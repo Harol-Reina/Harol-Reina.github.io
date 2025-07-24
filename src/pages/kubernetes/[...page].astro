@@ -1,19 +1,19 @@
 ---
 import type { GetStaticPathsOptions, Page } from 'astro';
 import { type CollectionEntry, getCollection } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import K8SPreview from '../../components/K8sPreview.astro';
 import Pagination from '../../components/Pagination.astro';
-import PostPreview from '../../components/PostPreview.astro';
 import Subscribe from '../../components/Subscribe.astro';
 import siteConfig from '../../data/site-config';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 import { sortItemsByDateDesc } from '../../utils/data-utils';
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-    const posts = (await getCollection('blog')).sort(sortItemsByDateDesc);
+    const posts = (await getCollection('k8sList')).sort(sortItemsByDateDesc);
     return paginate(posts, { pageSize: siteConfig.postsPerPage || 4 });
 }
 
-type Props = { page: Page<CollectionEntry<'blog'>> };
+type Props = { page: Page<CollectionEntry<'k8sList'>> };
 
 const { page } = Astro.props;
 const blog = page.data;
@@ -26,7 +26,7 @@ const blog = page.data;
     showHeader={false}
 >
     <h1 class="mb-12 text-2xl leading-tight font-serif italic sm:mb-16 sm:text-4xl">Blog Archive</h1>
-    {blog.map((post) => <PostPreview post={post} class="mb-10 sm:mb-12" />)}
+    {blog.map((post) => <K8SPreview post={post} class="mb-10 sm:mb-12" />)}
     <Pagination page={page} class="my-16 sm:my-24" />
     <Subscribe class="my-16 sm:my-24" />
 </BaseLayout>

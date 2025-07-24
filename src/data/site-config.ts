@@ -42,10 +42,10 @@ const siteConfig: SiteConfig = {
     website: 'https://Harol-Reina.github.io',
     title: 'Harol Reina',
     subtitle: 'DevOps Engineer & Backend Developer',
-    description: '¡Bienvenido a mi sitio web! Soy Harol Reina, un ingeniero DevOps especializado en desarrollo backend con .NET, Python y Node.js. Aquí comparto tips, tutoriales y mejores prácticas sobre Linux, DevOps, CI/CD, desarrollo backend y automatización. Explora mis proyectos y conocimientos técnicos.',
+    description: '¡Bienvenido a mi sitio web! Soy Harol Reina, un ingeniero DevOps especializado en desarrollo backend con .NET, Python y Node.js. Aquí comparto tips, tutoriales y mejores prácticas sobre Linux, DevOps, CI/CD, Docker, Kubernetes, Infrastructure as Code (IaC), desarrollo backend y automatización. Explora mis proyectos y conocimientos técnicos en containerización, orquestación y gestión de infraestructura moderna.',
     image: {
-        src: '/dante-preview.jpg',
-        alt: 'Dante - Astro.js and Tailwind CSS theme'
+        src: '/hero.jpg',
+        alt: 'Harol Reina'
     },
     headerNavLinks: [
         {
@@ -59,6 +59,22 @@ const siteConfig: SiteConfig = {
         {
             text: 'Blog',
             href: '/blog'
+        },
+        {
+            text: 'Linux',
+            href: '/linux'
+        },
+        {
+            text: 'Docker',
+            href: '/docker'
+        },
+        {
+            text: 'Kubernetes',
+            href: '/kubernetes'
+        },
+        {
+            text: 'Iac',
+            href: '/iac'
         },
         {
             text: 'Currículum',
@@ -81,10 +97,6 @@ const siteConfig: SiteConfig = {
         {
             text: 'Terms',
             href: '/terms'
-        },
-        {
-            text: 'Download theme',
-            href: 'https://github.com/JustGoodUI/dante-astro-theme'
         }
     ],
     socialLinks: [
@@ -103,7 +115,7 @@ const siteConfig: SiteConfig = {
     ],
     hero: {
         title: '¡Hola! Bienvenido a mi espacio técnico',
-        text: "Soy **Harol Reina**, un ingeniero DevOps con amplia experiencia en desarrollo backend utilizando **.NET** y **Python**. Mi pasión es automatizar procesos, optimizar infraestructuras y compartir conocimiento técnico. En este sitio encontrarás tips, tutoriales y mejores prácticas sobre **Linux**, **DevOps**, **CI/CD**, desarrollo backend y automatización. Conéctate conmigo en <a href='https://github.com/Harol-Reina'>GitHub</a> para ver mis proyectos o sígueme en mis redes sociales.",
+        text: "Soy **Harol Reina**, un ingeniero DevOps con amplia experiencia en desarrollo backend utilizando **.NET** y **Python**. Mi pasión es automatizar procesos, optimizar infraestructuras y compartir conocimiento técnico. En este sitio encontrarás tips, tutoriales y mejores prácticas sobre **Linux**, **DevOps**, **CI/CD**, **Docker**, **Kubernetes**, **Infrastructure as Code (IaC)**, desarrollo backend y automatización de infraestructura moderna. Conéctate conmigo en <a href='https://github.com/Harol-Reina'>GitHub</a> para ver mis proyectos o sígueme en mis redes sociales.",
         image: {
             src: '/hero.jpeg',
             alt: 'DevOps Engineer trabajando en infraestructura y desarrollo'
@@ -119,11 +131,11 @@ const siteConfig: SiteConfig = {
             }
         ]
     },
-    subscribe: {
-        title: 'Suscríbete a mis actualizaciones técnicas',
-        text: 'Recibe los últimos tips sobre DevOps, Linux, CI/CD y desarrollo backend directamente en tu correo.',
-        formUrl: '#'
-    },
+    // subscribe: {
+    //     title: 'Suscríbete a mis actualizaciones técnicas',
+    //     text: 'Recibe los últimos tips sobre DevOps, Linux, CI/CD y desarrollo backend directamente en tu correo.',
+    //     formUrl: '#'
+    // },
     postsPerPage: 8,
     projectsPerPage: 8
 };

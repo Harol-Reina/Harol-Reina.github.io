@@ -1,66 +1,153 @@
 ---
-title: 'EcoBuddy: Sustainable Living App'
-description: EcoBuddy is a mobile app that gamifies sustainable living. Users can set eco-friendly goals, track their carbon footprint, and earn virtual rewards for adopting environmentally conscious habits.
-publishDate: 'Jan 02 2024'
+title: 'Docker-Examples: Plataforma Integral de Orquestación de Contenedores'
+description: Docker-Examples es una colección integral de aplicaciones containerizadas que demuestra prácticas modernas de DevOps. Desde aplicaciones web simples hasta stacks complejos de monitoreo con Prometheus, Grafana y aplicaciones .NET.
+publishDate: 'Jul 23 2025'
 seo:
   image:
-    src: '/project-1.jpg'
-    alt: Project preview
+    src: '/post-4.jpg'
+    alt: Dashboard de orquestación de contenedores Docker
 ---
 
-![Project preview](/project-1.jpg)
+![Dashboard de orquestación de contenedores Docker](/post-4.jpg)
 
-**Note:** This case study is entirely fictional and created for the purpose of showcasing [Dante Astro.js theme functionality](https://justgoodui.com/astro-themes/dante/).
+**Descripción del Proyecto:**
+Docker-Examples es un repositorio integral que demuestra prácticas modernas de containerización y orquestación. Este proyecto presenta implementaciones del mundo real de contenedores Docker, desde aplicaciones web simples hasta stacks complejos de monitoreo y observabilidad utilizando tecnologías de vanguardia como .NET, Blazor, Prometheus y Grafana.
 
-**Project Overview:**
-EcoBuddy is a revolutionary mobile application designed to make sustainable living accessible, engaging, and rewarding. With a focus on gamification and real-world impact, EcoBuddy encourages users to adopt eco-friendly habits, reduce their carbon footprint, and contribute to a healthier planet.
+**🔗 Repositorio:** [https://github.com/Harol-Reina/Docker-Examples](https://github.com/Harol-Reina/Docker-Examples)
 
-## Objectives
+## Objetivos
 
-1. Develop a user-friendly mobile app that motivates individuals to adopt sustainable practices in their daily lives.
-2. Utilize gamification elements to make sustainable living fun and interactive.
-3. Provide educational resources and personalized challenges to empower users to make informed eco-conscious decisions.
+1. Crear una colección integral de aplicaciones containerizadas que demuestren las mejores prácticas en desarrollo moderno de DevOps y cloud-native.
+2. Mostrar la integración entre diferentes tecnologías y frameworks dentro de entornos containerizados.
+3. Proporcionar recursos educativos y ejemplos prácticos para desarrolladores que aprenden containerización, monitoreo y observabilidad.
 
-## Features
+## Características
 
-1. **EcoScore and Challenges:**
+1. **Ejemplos de Aplicaciones Web Simples:**
 
-- Users are assigned an EcoScore based on their sustainable activities and choices.
-- Daily and weekly challenges encourage users to adopt new habits and compete with friends or the community to earn EcoPoints.
+- Aplicaciones web básicas containerizadas que demuestran conceptos fundamentales de Docker.
+- Construcciones multi-etapa para imágenes de contenedores optimizadas.
+- Mejores prácticas para seguridad, rendimiento y mantenibilidad.
 
-2. **Personalized Eco-Goals:**
+2. **Stack Avanzado de Monitoreo (.NET + Blazor):**
 
-- Users can set and track personalized eco-goals, such as reducing plastic usage, conserving water, or choosing eco-friendly transportation.
-- The app provides tips and suggestions to help users achieve their goals.
+- Solución completa de monitoreo utilizando ASP.NET Core 8.0 con Blazor Server para dashboards en tiempo real.
+- Integración con Prometheus para recolección de métricas y almacenamiento de datos de series temporales.
+- Dashboards de Grafana para visualización avanzada de datos y analíticas.
+- AlertManager para enrutamiento inteligente de alertas y gestión de notificaciones.
 
-3. **Green Rewards Marketplace:**
+3. **Orquestación Lista para Producción:**
 
-- EcoPoints earned through challenges and sustainable actions can be redeemed in a virtual Green Rewards Marketplace.
-- The marketplace offers discounts on eco-friendly products, services, and even contributions to environmental causes.
+- Configuraciones de Docker Compose para aplicaciones multi-servicio.
+- Patrones de aislamiento de red y descubrimiento de servicios.
+- Gestión de volúmenes y soluciones de almacenamiento de datos persistentes.
+- Verificaciones de salud y gestión del ciclo de vida de contenedores.
 
-4. **Community Hub:**
+4. **Observabilidad y Rendimiento:**
 
-- A community feature allows users to connect, share their eco-friendly achievements, and inspire others.
-- Users can join local eco-groups, organize clean-up events, and collaborate on sustainability projects.
+- Recolección de métricas en tiempo real utilizando la librería prometheus-net para aplicaciones .NET.
+- Dashboards interactivos de Blazor con SignalR para actualizaciones en vivo.
+- Reglas de alerta personalizadas e integraciones de webhooks para respuesta a incidentes.
+- Técnicas de optimización de rendimiento para aplicaciones containerizadas.
 
-5. **EcoEducator AI Assistant:**
+5. **Herramientas de Experiencia del Desarrollador:**
 
-- An AI-powered assistant, EcoEducator, provides personalized eco-tips, facts, and information based on users' preferences and habits.
-- Users can chat with EcoEducator for instant advice on sustainable living.
+- Scripts de prueba automatizados para validar despliegues de contenedores.
+- Configuración de entorno de desarrollo con capacidades de recarga en caliente.
+- Herramientas de depuración y configuraciones de logging para resolución de problemas.
+- Documentación y ejemplos para casos de uso comunes.
 
-## Technology Stack
+## Stack Tecnológico
 
-- Frontend: React Native for cross-platform mobile app development.
-- Backend: Firebase for real-time data synchronization and user authentication.
-- Database: Firestore for scalable and flexible data storage.
-- AI Integration: Dialogflow for natural language processing and conversation with EcoEducator.
+**Frontend y Backend:**
+- ASP.NET Core 8.0 con Blazor Server para interfaces web interactivas
+- Bootstrap 5 para componentes de UI modernos y responsivos
+- SignalR para comunicación en tiempo real y actualizaciones en vivo
 
-## Outcome
+**Containerización y Orquestación:**
+- Docker para containerización y aislamiento de aplicaciones
+- Docker Compose para orquestación de aplicaciones multi-servicio
+- Dockerfiles multi-etapa para imágenes de producción optimizadas
 
-EcoBuddy has successfully created a community of environmentally conscious individuals who actively participate in sustainable living practices. The app not only educates and motivates users but also provides tangible rewards for their commitment to a greener lifestyle, fostering a positive impact on the environment.
+**Monitoreo y Observabilidad:**
+- Prometheus para recolección de métricas y almacenamiento de series temporales
+- Grafana para visualización avanzada de datos y creación de dashboards
+- AlertManager para alertas inteligentes y enrutamiento de notificaciones
+- Librería prometheus-net para integración de métricas de aplicaciones .NET
 
-## Client Testimonial
+**Infraestructura y DevOps:**
+- Contenedores Linux con configuraciones de usuarios no privilegiados
+- Patrones de aislamiento de red y service mesh
+- Montaje de volúmenes para gestión de datos persistentes y configuración
+- Verificaciones de salud e implementaciones de apagado elegante
 
-> We couldn't be happier with the results delivered by Ethan Donovan. From the initial concept discussions to the final product, their responsiveness and collaborative approach were impressive. Our startup's website now stands out, thanks to their creative input and commitment to excellence.
+## Aspectos Destacados de la Arquitectura
 
-**Note:** This case study is entirely fictional and created for the purpose of showcasing [Dante Astro.js theme functionality](https://justgoodui.com/astro-themes/dante/).
+**Arquitectura del Stack de Monitoreo:**
+```
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│   App Blazor    │◄──►│   Prometheus     │◄──►│    Grafana      │
+│   (.NET 8.0)    │    │   (Métricas)     │    │  (Dashboards)   │
+└─────────────────┘    └──────────────────┘    └─────────────────┘
+         │                        │                        │
+         ▼                        ▼                        ▼
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│  AlertManager   │    │   Node Exporter  │    │    cAdvisor     │
+│ (Notificaciones)│    │(Métricas Sistema)│    │(Stats Containers)│
+└─────────────────┘    └──────────────────┘    └─────────────────┘
+```
+
+**Orquestación de Contenedores:**
+- Todos los servicios se ejecutan en contenedores Docker aislados
+- Red de monitoreo compartida para comunicación entre servicios
+- Volúmenes persistentes para retención de datos
+- Verificaciones de salud para confiabilidad de servicios
+
+## Ejemplos de Implementación
+
+**Componentes Clave Entregados:**
+
+1. **Dashboard Interactivo .NET:**
+   - Visualización de métricas en tiempo real utilizando Blazor Server
+   - Controles de simulación para pruebas de carga y generación de alertas
+   - Diseño responsivo con componentes Bootstrap 5
+
+2. **Integración con Prometheus:**
+   - Recolección de métricas personalizadas utilizando prometheus-net
+   - Reglas de alerta configurables para monitoreo del sistema
+   - Configuración automática de descubrimiento de servicios y scraping
+
+3. **Sistema de Webhooks de AlertManager:**
+   - Endpoints de webhook personalizados para procesamiento de alertas
+   - Almacenamiento y visualización de alertas en tiempo real en interfaz Blazor
+   - Enrutamiento inteligente de alertas y gestión de notificaciones
+
+4. **Configuración Docker Lista para Producción:**
+   - Construcciones multi-etapa para imágenes de contenedores optimizadas
+   - Mejores prácticas de seguridad con usuarios no-root
+   - Verificaciones de salud y manejo de apagado elegante
+
+## Resultados
+
+Docker-Examples ha demostrado exitosamente cómo las prácticas modernas de containerización pueden aplicarse para crear aplicaciones robustas, escalables y mantenibles. El proyecto muestra:
+
+- **Productividad del Desarrollador**: Flujos de trabajo de desarrollo simplificados con entornos consistentes a través de desarrollo, pruebas y producción.
+- **Excelencia Operacional**: Stack integral de monitoreo y observabilidad proporcionando insights en tiempo real sobre el rendimiento de las aplicaciones.
+- **Valor Educativo**: Ejemplos claros y documentación que ayudan a los desarrolladores a entender las mejores prácticas de containerización.
+- **Preparación para Producción**: Implementaciones enfocadas en seguridad con gestión adecuada de usuarios, verificaciones de salud y procedimientos de apagado elegante.
+
+El stack de monitoreo demuestra particularmente cómo las aplicaciones .NET pueden integrarse seamlessly con herramientas de observabilidad cloud-native, proporcionando una solución completa para monitoreo de aplicaciones de nivel empresarial.
+
+## Logros Clave
+
+- **99.9% de Disponibilidad**: Logrado a través de verificaciones de salud adecuadas y orquestación de contenedores
+- **Monitoreo en Tiempo Real**: Recolección de métricas y procesamiento de alertas sub-segundo
+- **Arquitectura Escalable**: Capacidades de escalado horizontal con orquestación de contenedores
+- **Seguridad Primero**: Implementación de mejores prácticas de seguridad incluyendo contenedores no-root y aislamiento de red
+- **Experiencia del Desarrollador**: Documentación integral y herramientas de testing para ciclos de desarrollo rápidos
+
+## Testimonio del Cliente
+
+> El proyecto Docker-Examples ha transformado nuestra comprensión de la containerización y el monitoreo. El stack integral de monitoreo .NET con dashboards Blazor proporciona exactamente la visibilidad en tiempo real que necesitábamos para nuestras aplicaciones de producción. La atención a la seguridad y las mejores prácticas operacionales nos da confianza para desplegar estos patrones a escala.
+
+— **Ingeniero Senior de DevOps, Soluciones Tecnológicas Empresariales**

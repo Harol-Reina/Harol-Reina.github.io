@@ -1,7 +1,7 @@
 import { type CollectionEntry } from 'astro:content';
 import { slugify } from './common-utils';
 
-export function sortItemsByDateDesc(itemA: CollectionEntry<'blog' | 'projects'>, itemB: CollectionEntry<'blog' | 'projects'>) {
+export function sortItemsByDateDesc(itemA: CollectionEntry<'blog' | 'projects' | 'dockers' | 'iacList' | 'k8sList' | 'linuxList'>, itemB: CollectionEntry<'blog' | 'projects' | 'dockers' | 'iacList' | 'k8sList' | 'linuxList'>) {
     return new Date(itemB.data.publishDate).getTime() - new Date(itemA.data.publishDate).getTime();
 }
 

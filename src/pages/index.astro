@@ -1,11 +1,15 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
+import DockerPreview from '../components/DockerPreview.astro';
 import Hero from '../components/Hero.astro';
+import IacPreview from '../components/IacPreview.astro';
+import K8sPreview from '../components/K8sPreview.astro';
+import LinuxPreview from '../components/LinuxPreview.astro';
 import PostPreview from '../components/PostPreview.astro';
 import ProjectPreview from '../components/ProjectPreview.astro';
 import siteConfig from '../data/site-config';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import { sortItemsByDateDesc } from '../utils/data-utils';
 
 const posts = (await getCollection('blog')).sort(sortItemsByDateDesc);
@@ -13,6 +17,18 @@ const featuredPosts = posts.filter(({ data }) => data.isFeatured);
 
 const projects = (await getCollection('projects')).sort(sortItemsByDateDesc);
 const featuredProjects = projects.filter(({ data }) => data.isFeatured);
+
+const dockers = (await getCollection('dockers')).sort(sortItemsByDateDesc);
+const featuredDockers = dockers.filter(({ data }) => data.isFeatured);
+
+const iacList = (await getCollection('iacList')).sort(sortItemsByDateDesc);
+const featuredIac = iacList.filter(({ data }) => data.isFeatured);
+
+const k8sList = (await getCollection('k8sList')).sort(sortItemsByDateDesc);
+const featuredK8s = k8sList.filter(({ data }) => data.isFeatured);
+
+const linuxList = (await getCollection('linuxList')).sort(sortItemsByDateDesc);
+const featuredLinux = linuxList.filter(({ data }) => data.isFeatured);
 ---
 
 <BaseLayout description={siteConfig.description} image={siteConfig.image}>
@@ -39,6 +55,62 @@ const featuredProjects = projects.filter(({ data }) => data.isFeatured);
                 ))}
                 <div class="mt-12 sm:mt-16">
                     <Button href="/blog">View All Posts</Button>
+                </div>
+            </div>
+        )
+    }
+
+    {
+        featuredDockers?.length > 0 && (
+            <div class="mb-16 sm:mb-24">
+                <h2 class="mb-12 text-xl font-serif italic sm:mb-16 sm:text-2xl">Writing</h2>
+                {featuredDockers.map((post) => (
+                    <DockerPreview post={post} class="mb-10 sm:mb-12" headingLevel="h3" />
+                ))}
+                <div class="mt-12 sm:mt-16">
+                    <Button href="/docker">View All Dockers</Button>
+                </div>
+            </div>
+        )
+    }
+
+    {
+        featuredIac?.length > 0 && (
+            <div class="mb-16 sm:mb-24">
+                <h2 class="mb-12 text-xl font-serif italic sm:mb-16 sm:text-2xl">Writing</h2>
+                {featuredIac.map((post) => (
+                    <IacPreview post={post} class="mb-10 sm:mb-12" headingLevel="h3" />
+                ))}
+                <div class="mt-12 sm:mt-16">
+                    <Button href="/iac">View All Iac</Button>
+                </div>
+            </div>
+        )
+    }
+
+    {
+        featuredK8s?.length > 0 && (
+            <div class="mb-16 sm:mb-24">
+                <h2 class="mb-12 text-xl font-serif italic sm:mb-16 sm:text-2xl">Kubernetes</h2>
+                {featuredK8s.map((post) => (
+                    <K8sPreview post={post} class="mb-10 sm:mb-12" headingLevel="h3" />
+                ))}
+                <div class="mt-12 sm:mt-16">
+                    <Button href="/kubernetes">View All K8s</Button>
+                </div>
+            </div>
+        )
+    }
+
+    {
+        featuredLinux?.length > 0 && (
+            <div class="mb-16 sm:mb-24">
+                <h2 class="mb-12 text-xl font-serif italic sm:mb-16 sm:text-2xl">Linux</h2>
+                {featuredLinux.map((post) => (
+                    <LinuxPreview post={post} class="mb-10 sm:mb-12" headingLevel="h3" />
+                ))}
+                <div class="mt-12 sm:mt-16">
+                    <Button href="/linux">View All Linux</Button>
                 </div>
             </div>
         )

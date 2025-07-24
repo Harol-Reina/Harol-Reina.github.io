@@ -1,5 +1,5 @@
-import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { defineCollection, z } from 'astro:content';
 
 const seoSchema = z.object({
     title: z.string().min(5).max(120).optional(),
@@ -34,6 +34,58 @@ const pages = defineCollection({
     })
 });
 
+const dockers = defineCollection({
+    loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/docker' }),
+    schema: z.object({
+        title: z.string(),
+        excerpt: z.string().optional(),
+        publishDate: z.coerce.date(),
+        updatedDate: z.coerce.date().optional(),
+        isFeatured: z.boolean().default(false),
+        tags: z.array(z.string()).default([]),
+        seo: seoSchema.optional()
+    })
+});
+
+const iacList = defineCollection({
+    loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/iac' }),
+    schema: z.object({
+        title: z.string(),
+        excerpt: z.string().optional(),
+        publishDate: z.coerce.date(),
+        updatedDate: z.coerce.date().optional(),
+        isFeatured: z.boolean().default(false),
+        tags: z.array(z.string()).default([]),
+        seo: seoSchema.optional()
+    })
+});
+
+const k8sList = defineCollection({
+    loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/kubernetes' }),
+    schema: z.object({
+        title: z.string(),
+        excerpt: z.string().optional(),
+        publishDate: z.coerce.date(),
+        updatedDate: z.coerce.date().optional(),
+        isFeatured: z.boolean().default(false),
+        tags: z.array(z.string()).default([]),
+        seo: seoSchema.optional()
+    })
+});
+
+const linuxList = defineCollection({
+    loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/linux' }),
+    schema: z.object({
+        title: z.string(),
+        excerpt: z.string().optional(),
+        publishDate: z.coerce.date(),
+        updatedDate: z.coerce.date().optional(),
+        isFeatured: z.boolean().default(false),
+        tags: z.array(z.string()).default([]),
+        seo: seoSchema.optional()
+    })
+});
+
 const projects = defineCollection({
     loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
     schema: z.object({
@@ -45,4 +97,4 @@ const projects = defineCollection({
     })
 });
 
-export const collections = { blog, pages, projects };
+export const collections = { blog, pages, iacList, dockers, k8sList, linuxList, projects };
