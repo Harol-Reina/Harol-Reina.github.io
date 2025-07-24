@@ -1,43 +1,79 @@
 ---
-title: About
+title: Sobre Mí
 seo:
-  title: About Me
-  description: Learn more about the person behind the website and embark on a journey of inspiration and shared experiences.
+  title: Sobre Mí - Harol Reina
+  description: Conoce más sobre Harol Reina, DevOps Engineer y Backend Developer especializado en .NET, Python, Linux y automatización. Descubre mi trayectoria profesional y pasión por la tecnología.
   image:
     src: '/about.jpeg'
-    alt: A person sitting at a desk in front of a computer
+    alt: Harol Reina - DevOps Engineer trabajando en automatización
 ---
 
-![Alt text for image](/about.jpeg)
+![Harol Reina - DevOps Engineer](/about.jpeg)
 
-**Note!:** This about page is entirely fictional and created for the purpose of showcasing [Dante Astro.js theme functionality](https://justgoodui.com/astro-themes/dante/).
+## Harol Reina - DevOps Engineer & Backend Developer
 
-## Ethan Donovan - Web Developer based in Estonia
+**¡Hola!** Soy Harol Reina, un apasionado ingeniero DevOps con amplia experiencia en desarrollo backend y automatización de infraestructuras. Mi trabajo se centra en crear soluciones escalables y eficientes que conecten el desarrollo con las operaciones, utilizando las mejores prácticas y tecnologías modernas.
 
-**Greetings!** I'm Ethan Donovan, a passionate web developer residing in the picturesque landscapes of [Estonia](https://en.wikipedia.org/wiki/Estonia). With a keen eye for design and a love for crafting seamless digital experiences, I bring a unique blend of creativity and technical expertise to the world of web development.
+## Mi Filosofía y Enfoque
 
-## Skills and Expertise
+Creo firmemente en el poder de la **automatización** y la **colaboración** para transformar la forma en que desarrollamos y desplegamos software. Mi enfoque se basa en:
 
-I specialize in front-end and back-end development, utilizing the latest technologies to build responsive and user-friendly websites. My proficiency includes **HTML**, **CSS**, **JavaScript**, and frameworks such as **Astro.js** for dynamic and interactive user interfaces. On the server side, I'm well-versed in Node.js and have experience with database management systems like MongoDB.
+- **Eficiencia a través de la automatización**: Eliminar tareas repetitivas y procesos manuales
+- **Cultura DevOps**: Fomentar la colaboración entre equipos de desarrollo y operaciones
+- **Mejora continua**: Siempre buscando optimizar procesos y adoptar nuevas tecnologías
+- **Calidad y confiabilidad**: Implementar prácticas que garanticen sistemas robustos y seguros
 
-## Innovation and Problem-Solving
+## Especialidades y Expertise
 
-I thrive on solving complex problems and transforming ideas into functional, elegant websites. Whether it's optimizing performance, implementing new features, or troubleshooting issues, I approach each challenge with enthusiasm and a commitment to delivering high-quality solutions.
+Me especializo en **desarrollo backend** y **automatización de infraestructura**, combinando sólidos conocimientos en programación con expertise en operaciones. Mis áreas de especialización incluyen:
 
-## Global Perspective, Local Impact
+### **Desarrollo Backend**
+Trabajo principalmente con **.NET Core/5+**, **Python** y **Node.js**, creando APIs robustas, microservicios escalables y sistemas distribuidos. Mi experiencia abarca desde aplicaciones monolíticas hasta arquitecturas de microservicios complejas.
 
-Living in Estonia has not only influenced my appreciation for nature and culture but has also shaped my approach to web development. I understand the importance of creating digital solutions that resonate with local audiences while maintaining a global perspective.
+### **DevOps y Automatización**
+Implemento pipelines **CI/CD**, gestiono infraestructura como código con **Terraform**, y orquesto contenedores con **Docker** y **Kubernetes**. Mi objetivo es hacer que el software llegue a producción de manera rápida, segura y confiable.
 
-## Continuous Learning
+### **Administración de Sistemas Linux**
+Tengo amplia experiencia en administración de sistemas **Linux** (especialmente **Debian/Ubuntu**), desde configuraciones básicas hasta optimizaciones avanzadas de rendimiento y seguridad.
 
-The dynamic nature of the tech industry inspires me to stay up-to-date with the latest trends and advancements. I'm always eager to expand my skill set and embrace emerging technologies that enhance the functionality and aesthetics of the websites I create.
+## Innovación y Resolución de Problemas
 
-## Collaboration and Communication
+Me motiva resolver problemas complejos y transformar ideas en soluciones funcionales y elegantes. Ya sea optimizando el rendimiento de una aplicación, implementando nuevas funcionalidades, o automatizando procesos manuales, abordo cada desafío con entusiasmo y un compromiso firme con la entrega de soluciones de alta calidad.
 
-I believe in the power of collaboration and effective communication. Whether working with clients, designers, or fellow developers, I value clear communication to ensure the success of every project.
+## Perspectiva Global, Impacto Local
 
-## Get in Touch
+Mi experiencia trabajando con equipos distribuidos y tecnologías cloud me ha dado una perspectiva global sobre las mejores prácticas de la industria. Al mismo tiempo, entiendo la importancia de crear soluciones que se adapten a las necesidades específicas de cada organización y contexto local.
 
-Are you looking to elevate your online presence or bring your digital ideas to life? I'd love to hear from you! Feel free to reach out for collaboration, consultation, or just a friendly chat about all things web development.
+## Aprendizaje Continuo
 
-_Let's build something amazing together!_
+La naturaleza dinámica de la industria tecnológica me inspira a mantenerme actualizado con las últimas tendencias y avances. Constantemente amplío mis habilidades y abrazo tecnologías emergentes que mejoran la funcionalidad, seguridad y eficiencia de los sistemas que desarrollo.
+
+### Actualmente explorando:
+- **Kubernetes avanzado** y service mesh con Istio
+- **GitOps** y continuous deployment
+- **Site Reliability Engineering (SRE)** 
+- **Security DevOps (DevSecOps)**
+- Contribución a proyectos open source
+
+## Colaboración y Comunicación
+
+Valoro profundamente el poder de la colaboración y la comunicación efectiva. Ya sea trabajando con clientes, diseñadores, o compañeros desarrolladores, considero que la comunicación clara es fundamental para el éxito de cualquier proyecto.
+
+## Compartiendo Conocimiento
+
+Una de mis pasiones es **compartir conocimiento** con la comunidad. A través de este blog, comparto:
+- **Tutoriales prácticos** sobre Linux, Docker, Kubernetes e IaC
+- **Mejores prácticas** de DevOps y desarrollo backend
+- **Experiencias reales** y lecciones aprendidas
+- **Tips y trucos** para optimizar flujos de trabajo
+
+## Conectemos
+
+¿Estás buscando optimizar tus procesos de desarrollo, implementar prácticas DevOps, o llevar tus ideas digitales al siguiente nivel? ¡Me encantaría escucharte! No dudes en contactarme para colaboraciones, consultas, o simplemente para charlar sobre tecnología y mejores prácticas.
+
+**Canales de contacto:**
+- 🔗 **GitHub**: [github.com/Harol-Reina](https://github.com/Harol-Reina)
+- 💼 **LinkedIn**: [linkedin.com/in/harol-reina](https://linkedin.com/in/harol-reina)
+- 🐦 **Twitter**: [@HaroldR1975](https://twitter.com/HaroldR1975)
+
+_¡Construyamos algo increíble juntos!_ 🚀

@@ -1,1696 +1,1268 @@
 ---
-title: 'Infrastructure as Code: Automatización y Gestión Moderna de Infraestructura'
-excerpt: Domina Infrastructure as Code con Terraform, Ansible y mejores prácticas de DevOps. Aprende a crear, gestionar y escalar infraestructura de manera declarativa, versionada y reproducible en múltiples proveedores cloud.
-publishDate: 'July 25 2025'
+title: 'Kubernetes: Guía Completa de Orquestación de Contenedores para DevOps'
+excerpt: Domina Kubernetes desde cero hasta producción. Aprende pods, services, deployments, ingress, helm charts y mejores prácticas de seguridad para gestionar clusters de contenedores a escala empresarial.
+publishDate: 'July 24 2025'
 tags:
-  - Infrastructure-as-Code
-  - Terraform
-  - Ansible
+  - Kubernetes
+  - Orquestación
+  - Contenedores
   - DevOps
-  - Automatización
-  - AWS
-  - Azure
-  - GCP
-  - CloudFormation
-  - GitOps
+  - Cloud-Native
+  - Microservicios
+  - K8s
+  - Helm
+  - Ingress
+  - Docker
 seo:
   image:
-    src: '/post-8.jpg'
-    alt: Dashboard de Infrastructure as Code mostrando automatización de infraestructura
+    src: '/post-7.jpg'
+    alt: Dashboard de Kubernetes mostrando pods y servicios
 ---
 
-![Automatización de infraestructura con Infrastructure as Code](/post-8.jpg)
+![Orquestación de contenedores con Kubernetes](/post-7.jpg)
 
-**Infrastructure as Code (IaC)** es una de las prácticas más transformadoras en el ecosistema DevOps moderno. Esta metodología permite **gestionar y aprovisionar infraestructura a través de código** en lugar de procesos manuales, proporcionando consistencia, velocidad y escalabilidad sin precedentes en la gestión de recursos cloud y on-premises.
+**Kubernetes** es la plataforma de orquestación de contenedores más poderosa y ampliamente adoptada en el ecosistema DevOps moderno. Como **"el sistema operativo de la nube"**, Kubernetes automatiza el despliegue, escalado y gestión de aplicaciones containerizadas, permitiendo a los equipos de desarrollo entregar software de manera más rápida, confiable y escalable.
 
-En esta guía integral, exploraremos desde los conceptos fundamentales hasta implementaciones avanzadas de **Terraform**, **Ansible**, **AWS CloudFormation** y otras herramientas líderes, incluyendo patrones de diseño, mejores prácticas de seguridad y estrategias de CI/CD para infraestructura.
+En esta guía completa, aprenderás desde los conceptos fundamentales hasta técnicas avanzadas de producción, incluyendo configuraciones de seguridad, monitoreo y mejores prácticas utilizadas por las empresas más exitosas del mundo.
 
-## ¿Por qué Infrastructure as Code es Esencial?
+## ¿Por qué Kubernetes es Fundamental en DevOps?
 
-### Ventajas Fundamentales de IaC:
+### Ventajas Clave de Kubernetes:
 
-- **🔄 Reproducibilidad**: Infraestructura idéntica en múltiples entornos
-- **📚 Versionado**: Control de cambios con Git y rollback automático
-- **⚡ Velocidad**: Provisioning automatizado en minutos vs días
-- **🛡️ Consistencia**: Eliminación de configuration drift y errores humanos
-- **💰 Optimización de Costos**: Gestión inteligente de recursos y auto-scaling
-- **🔒 Seguridad**: Políticas de seguridad como código y compliance automatizado
+- **🚀 Escalabilidad Automática**: Auto-scaling horizontal y vertical basado en métricas
+- **🛡️ Alta Disponibilidad**: Self-healing, rolling updates y disaster recovery
+- **🔄 Gestión Declarativa**: Infrastructure as Code para configuraciones reproducibles
+- **🌐 Portabilidad Multi-Cloud**: Ejecuta en AWS, Azure, GCP o on-premises
+- **📊 Observabilidad Nativa**: Métricas, logs y tracing integrados
+- **🔒 Seguridad Avanzada**: RBAC, network policies y secrets management
 
-### Problemas que Resuelve IaC:
+### Casos de Uso Empresariales:
 
-- **Snowflake Servers**: Servidores únicos imposibles de replicar
-- **Configuration Drift**: Diferencias no documentadas entre entornos
-- **Manual Provisioning**: Procesos lentos y propensos a errores
-- **Falta de Documentación**: Infraestructura no documentada
-- **Escalabilidad Limitada**: Dificultad para escalar horizontalmente
+- **Aplicaciones Microservicios** con alta disponibilidad
+- **CI/CD Pipelines** automatizados y escalables  
+- **Modernización de aplicaciones** legacy
+- **Plataformas multi-tenant** y SaaS
+- **Data Processing** y machine learning workloads
+- **Edge Computing** y IoT deployments
 
-## 🏗️ Herramientas Principales de IaC
+## 🏗️ Arquitectura de Kubernetes
 
-### Comparación de Herramientas IaC
-
-| Herramienta | Tipo | Enfoque | Cloud Support | Curva Aprendizaje |
-|-------------|------|---------|---------------|-------------------|
-| **Terraform** | Declarativo | Provisioning | Multi-cloud | Media |
-| **Ansible** | Imperativo/Declarativo | Configuration | Multi-cloud | Baja |
-| **CloudFormation** | Declarativo | Provisioning | AWS Only | Media-Alta |
-| **Pulumi** | Declarativo | Provisioning | Multi-cloud | Alta |
-| **CDK** | Imperativo | Provisioning | Multi-cloud | Alta |
-
-### Arquitectura de IaC Stack
+### Componentes del Control Plane
 
 ```bash
 ┌─────────────────────────────────────────────────────────────┐
-│                    INFRASTRUCTURE AS CODE                   │
+│                    KUBERNETES CONTROL PLANE                 │
 ├─────────────────────────────────────────────────────────────┤
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
-│  │   GitOps    │  │   CI/CD     │  │   Policy as Code    │  │
-│  │ (GitHub)    │  │ (Jenkins)   │  │   (Open Policy      │  │
-│  │             │  │             │  │    Agent)           │  │
+│  │   etcd      │  │ API Server  │  │   Scheduler         │  │
+│  │ (Database)  │  │ (Gateway)   │  │ (Pod Placement)     │  │
 │  └─────────────┘  └─────────────┘  └─────────────────────┘  │
+│  ┌─────────────────────────────────────────────────────────┐  │
+│  │          Controller Manager                             │  │
+│  │    (Deployments, ReplicaSets, Services, etc.)          │  │
+│  └─────────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                       WORKER NODES                         │
 ├─────────────────────────────────────────────────────────────┤
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
-│  │  Terraform  │  │   Ansible   │  │   Configuration     │  │
-│  │(Provisioning│  │(Config Mgmt)│  │   Management        │  │
-│  │  & State)   │  │             │  │                     │  │
-│  └─────────────┘  └─────────────┘  └─────────────────────┘  │
-├─────────────────────────────────────────────────────────────┤
-│         AWS        │       Azure       │        GCP        │
-│    ┌─────────────┐ │  ┌─────────────┐  │ ┌─────────────┐   │
-│    │     EC2     │ │  │     VMs     │  │ │ Compute     │   │
-│    │     RDS     │ │  │   Cosmos    │  │ │ Engine      │   │
-│    │     S3      │ │  │   Storage   │  │ │ Cloud SQL   │   │
-│    └─────────────┘ │  └─────────────┘  │ └─────────────┘   │
+│  Node 1           │  Node 2           │  Node 3             │
+│  ┌─────────────┐   │  ┌─────────────┐   │  ┌─────────────┐   │
+│  │   kubelet   │   │  │   kubelet   │   │  │   kubelet   │   │
+│  │ kube-proxy  │   │  │ kube-proxy  │   │  │ kube-proxy  │   │
+│  │ Container   │   │  │ Container   │   │  │ Container   │   │
+│  │ Runtime     │   │  │ Runtime     │   │  │ Runtime     │   │
+│  └─────────────┘   │  └─────────────┘   │  └─────────────┘   │
+│       │ Pods      │       │ Pods      │       │ Pods      │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## 🌍 Terraform: Infraestructura Declarativa
+## 🔧 Instalación y Configuración
 
-### Instalación y Configuración Inicial
+### Opción 1: Minikube (Desarrollo Local)
 
 ```bash
-# Instalar Terraform en Linux
-curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-sudo apt-get update && sudo apt-get install terraform
+# Instalar Minikube en Linux
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+
+# Iniciar cluster local
+minikube start --driver=docker --cpus=4 --memory=8g
+
+# Verificar estado del cluster
+minikube status
+kubectl cluster-info
+
+# Habilitar addons útiles
+minikube addons enable dashboard
+minikube addons enable metrics-server
+minikube addons enable ingress
+```
+
+### Opción 2: kubeadm (Cluster de Producción)
+
+```bash
+# Preparar nodos (en todos los nodos)
+sudo apt-get update
+sudo apt-get install -y apt-transport-https ca-certificates curl
+
+# Instalar Docker
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker $USER
+
+# Instalar kubeadm, kubelet y kubectl
+sudo curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg \
+  https://packages.cloud.google.com/apt/doc/apt-key.gpg
+
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] \
+  https://apt.kubernetes.io/ kubernetes-xenial main" | \
+  sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+sudo apt-get update
+sudo apt-get install -y kubelet kubeadm kubectl
+sudo apt-mark hold kubelet kubeadm kubectl
+
+# Inicializar cluster (solo en master node)
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+
+# Configurar kubectl para usuario actual
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+# Instalar network plugin (Flannel)
+kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
+```
+
+### Instalación de kubectl
+
+```bash
+# Linux
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
 # Verificar instalación
-terraform version
+kubectl version --client
+kubectl cluster-info
 
 # Configurar autocompletado
-terraform -install-autocomplete
-
-# Configurar credentials AWS
-export AWS_ACCESS_KEY_ID="your-access-key"
-export AWS_SECRET_ACCESS_KEY="your-secret-key"
-export AWS_DEFAULT_REGION="us-west-2"
+echo 'source <(kubectl completion bash)' >>~/.bashrc
+echo 'alias k=kubectl' >>~/.bashrc
+echo 'complete -o default -F __start_kubectl k' >>~/.bashrc
 ```
 
-### Estructura de Proyecto Terraform
+## 🎯 Conceptos Fundamentales
+
+### Pods: La Unidad Básica
+
+```yaml
+# pod-example.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+  labels:
+    app: nginx
+    tier: frontend
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.21
+    ports:
+    - containerPort: 80
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    env:
+    - name: ENV
+      value: "production"
+    volumeMounts:
+    - name: config-volume
+      mountPath: /etc/nginx/conf.d
+  volumes:
+  - name: config-volume
+    configMap:
+      name: nginx-config
+  restartPolicy: Always
+```
+
+### Deployments: Gestión de Aplicaciones
+
+```yaml
+# deployment-example.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.21
+        ports:
+        - containerPort: 80
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+```
+
+### Services: Networking y Descubrimiento
+
+```yaml
+# service-examples.yaml
+---
+# ClusterIP Service (interno)
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP
+
+---
+# LoadBalancer Service (externo)
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-loadbalancer
+spec:
+  selector:
+    app: nginx
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: LoadBalancer
+
+---
+# NodePort Service (acceso por puerto de nodo)
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-nodeport
+spec:
+  selector:
+    app: nginx
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+    nodePort: 30080
+  type: NodePort
+```
+
+## 🛠️ Comandos Esenciales de kubectl
+
+### Gestión de Recursos
 
 ```bash
-terraform-infrastructure/
-├── environments/
-│   ├── dev/
-│   │   ├── main.tf
-│   │   ├── variables.tf
-│   │   ├── terraform.tfvars
-│   │   └── outputs.tf
-│   ├── staging/
-│   └── prod/
-├── modules/
-│   ├── vpc/
-│   │   ├── main.tf
-│   │   ├── variables.tf
-│   │   └── outputs.tf
-│   ├── ec2/
-│   ├── rds/
-│   └── s3/
-├── shared/
-│   ├── backend.tf
-│   └── providers.tf
-└── scripts/
-    ├── deploy.sh
-    └── destroy.sh
+# Aplicar configuraciones
+kubectl apply -f deployment.yaml
+kubectl apply -f https://raw.githubusercontent.com/ejemplo/config.yaml
+kubectl apply -k ./directorio-kustomize/
+
+# Obtener información
+kubectl get pods
+kubectl get deployments
+kubectl get services
+kubectl get nodes -o wide
+
+# Describir recursos detalladamente
+kubectl describe pod nginx-pod
+kubectl describe deployment nginx-deployment
+kubectl describe service nginx-service
+
+# Ver logs
+kubectl logs nginx-pod
+kubectl logs -f deployment/nginx-deployment
+kubectl logs --previous nginx-pod
+
+# Ejecutar comandos en contenedores
+kubectl exec -it nginx-pod -- /bin/bash
+kubectl exec nginx-pod -- ls /etc/nginx/
+
+# Port forwarding para debugging
+kubectl port-forward pod/nginx-pod 8080:80
+kubectl port-forward service/nginx-service 8080:80
 ```
 
-### Configuración de Providers y Backend
-
-```hcl
-# providers.tf
-terraform {
-  required_version = ">= 1.5"
-  
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 5.0"
-    }
-    random = {
-      source  = "hashicorp/random"
-      version = "~> 3.1"
-    }
-    tls = {
-      source  = "hashicorp/tls"
-      version = "~> 4.0"
-    }
-  }
-
-  backend "s3" {
-    bucket         = "my-terraform-state-bucket"
-    key            = "environments/prod/terraform.tfstate"
-    region         = "us-west-2"
-    encrypt        = true
-    dynamodb_table = "terraform-state-lock"
-  }
-}
-
-provider "aws" {
-  region = var.aws_region
-  
-  default_tags {
-    tags = {
-      Environment   = var.environment
-      Project       = var.project_name
-      ManagedBy     = "Terraform"
-      Owner         = var.owner
-      CostCenter    = var.cost_center
-      CreatedAt     = timestamp()
-    }
-  }
-}
-```
-
-### Módulo VPC Completo
-
-```hcl
-# modules/vpc/main.tf
-resource "aws_vpc" "main" {
-  cidr_block           = var.vpc_cidr
-  enable_dns_hostnames = true
-  enable_dns_support   = true
-
-  tags = {
-    Name = "${var.project_name}-${var.environment}-vpc"
-  }
-}
-
-resource "aws_internet_gateway" "main" {
-  vpc_id = aws_vpc.main.id
-
-  tags = {
-    Name = "${var.project_name}-${var.environment}-igw"
-  }
-}
-
-# Public Subnets
-resource "aws_subnet" "public" {
-  count = length(var.public_subnet_cidrs)
-
-  vpc_id                  = aws_vpc.main.id
-  cidr_block              = var.public_subnet_cidrs[count.index]
-  availability_zone       = data.aws_availability_zones.available.names[count.index]
-  map_public_ip_on_launch = true
-
-  tags = {
-    Name = "${var.project_name}-${var.environment}-public-subnet-${count.index + 1}"
-    Type = "Public"
-  }
-}
-
-# Private Subnets
-resource "aws_subnet" "private" {
-  count = length(var.private_subnet_cidrs)
-
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = var.private_subnet_cidrs[count.index]
-  availability_zone = data.aws_availability_zones.available.names[count.index]
-
-  tags = {
-    Name = "${var.project_name}-${var.environment}-private-subnet-${count.index + 1}"
-    Type = "Private"
-  }
-}
-
-# NAT Gateways
-resource "aws_eip" "nat" {
-  count = length(var.public_subnet_cidrs)
-
-  domain = "vpc"
-  depends_on = [aws_internet_gateway.main]
-
-  tags = {
-    Name = "${var.project_name}-${var.environment}-nat-eip-${count.index + 1}"
-  }
-}
-
-resource "aws_nat_gateway" "main" {
-  count = length(var.public_subnet_cidrs)
-
-  allocation_id = aws_eip.nat[count.index].id
-  subnet_id     = aws_subnet.public[count.index].id
-
-  tags = {
-    Name = "${var.project_name}-${var.environment}-nat-gateway-${count.index + 1}"
-  }
-
-  depends_on = [aws_internet_gateway.main]
-}
-
-# Route Tables
-resource "aws_route_table" "public" {
-  vpc_id = aws_vpc.main.id
-
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.main.id
-  }
-
-  tags = {
-    Name = "${var.project_name}-${var.environment}-public-rt"
-  }
-}
-
-resource "aws_route_table" "private" {
-  count = length(var.private_subnet_cidrs)
-
-  vpc_id = aws_vpc.main.id
-
-  route {
-    cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.main[count.index].id
-  }
-
-  tags = {
-    Name = "${var.project_name}-${var.environment}-private-rt-${count.index + 1}"
-  }
-}
-
-# Route Table Associations
-resource "aws_route_table_association" "public" {
-  count = length(var.public_subnet_cidrs)
-
-  subnet_id      = aws_subnet.public[count.index].id
-  route_table_id = aws_route_table.public.id
-}
-
-resource "aws_route_table_association" "private" {
-  count = length(var.private_subnet_cidrs)
-
-  subnet_id      = aws_subnet.private[count.index].id
-  route_table_id = aws_route_table.private[count.index].id
-}
-
-# Data Sources
-data "aws_availability_zones" "available" {
-  state = "available"
-}
-
-# Security Groups
-resource "aws_security_group" "web" {
-  name        = "${var.project_name}-${var.environment}-web-sg"
-  description = "Security group for web servers"
-  vpc_id      = aws_vpc.main.id
-
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = [var.vpc_cidr]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    Name = "${var.project_name}-${var.environment}-web-sg"
-  }
-}
-```
-
-### Variables y Outputs
-
-```hcl
-# modules/vpc/variables.tf
-variable "project_name" {
-  description = "Name of the project"
-  type        = string
-}
-
-variable "environment" {
-  description = "Environment name"
-  type        = string
-}
-
-variable "vpc_cidr" {
-  description = "CIDR block for VPC"
-  type        = string
-  default     = "10.0.0.0/16"
-}
-
-variable "public_subnet_cidrs" {
-  description = "CIDR blocks for public subnets"
-  type        = list(string)
-  default     = ["10.0.1.0/24", "10.0.2.0/24"]
-}
-
-variable "private_subnet_cidrs" {
-  description = "CIDR blocks for private subnets"
-  type        = list(string)
-  default     = ["10.0.10.0/24", "10.0.20.0/24"]
-}
-
-# modules/vpc/outputs.tf
-output "vpc_id" {
-  description = "ID of the VPC"
-  value       = aws_vpc.main.id
-}
-
-output "vpc_cidr_block" {
-  description = "CIDR block of the VPC"
-  value       = aws_vpc.main.cidr_block
-}
-
-output "public_subnet_ids" {
-  description = "IDs of the public subnets"
-  value       = aws_subnet.public[*].id
-}
-
-output "private_subnet_ids" {
-  description = "IDs of the private subnets"
-  value       = aws_subnet.private[*].id
-}
-
-output "internet_gateway_id" {
-  description = "ID of the Internet Gateway"
-  value       = aws_internet_gateway.main.id
-}
-
-output "nat_gateway_ids" {
-  description = "IDs of the NAT Gateways"
-  value       = aws_nat_gateway.main[*].id
-}
-
-output "web_security_group_id" {
-  description = "ID of the web security group"
-  value       = aws_security_group.web.id
-}
-```
-
-### Implementación de Auto Scaling Group
-
-```hcl
-# modules/ec2/main.tf
-# Launch Template
-resource "aws_launch_template" "web" {
-  name_prefix   = "${var.project_name}-${var.environment}-web-"
-  image_id      = data.aws_ami.amazon_linux.id
-  instance_type = var.instance_type
-  key_name      = var.key_name
-
-  vpc_security_group_ids = [var.security_group_id]
-
-  user_data = base64encode(templatefile("${path.module}/user-data.sh", {
-    environment = var.environment
-    project_name = var.project_name
-  }))
-
-  block_device_mappings {
-    device_name = "/dev/xvda"
-    ebs {
-      volume_size = var.root_volume_size
-      volume_type = "gp3"
-      encrypted   = true
-      delete_on_termination = true
-    }
-  }
-
-  metadata_options {
-    http_endpoint = "enabled"
-    http_tokens   = "required"
-    http_put_response_hop_limit = 1
-  }
-
-  monitoring {
-    enabled = true
-  }
-
-  tag_specifications {
-    resource_type = "instance"
-    tags = {
-      Name = "${var.project_name}-${var.environment}-web"
-    }
-  }
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
-
-# Auto Scaling Group
-resource "aws_autoscaling_group" "web" {
-  name                = "${var.project_name}-${var.environment}-web-asg"
-  vpc_zone_identifier = var.subnet_ids
-  target_group_arns   = [aws_lb_target_group.web.arn]
-  health_check_type   = "ELB"
-  health_check_grace_period = 300
-
-  min_size         = var.min_size
-  max_size         = var.max_size
-  desired_capacity = var.desired_capacity
-
-  launch_template {
-    id      = aws_launch_template.web.id
-    version = "$Latest"
-  }
-
-  enabled_metrics = [
-    "GroupMinSize",
-    "GroupMaxSize",
-    "GroupDesiredCapacity",
-    "GroupInServiceInstances",
-    "GroupTotalInstances"
-  ]
-
-  tag {
-    key                 = "Name"
-    value               = "${var.project_name}-${var.environment}-web-asg"
-    propagate_at_launch = true
-  }
-
-  tag {
-    key                 = "Environment"
-    value               = var.environment
-    propagate_at_launch = true
-  }
-
-  instance_refresh {
-    strategy = "Rolling"
-    preferences {
-      min_healthy_percentage = 50
-    }
-  }
-}
-
-# Application Load Balancer
-resource "aws_lb" "web" {
-  name               = "${var.project_name}-${var.environment}-alb"
-  internal           = false
-  load_balancer_type = "application"
-  security_groups    = [var.security_group_id]
-  subnets            = var.public_subnet_ids
-
-  enable_deletion_protection = var.enable_deletion_protection
-
-  access_logs {
-    bucket  = var.access_logs_bucket
-    prefix  = "alb-logs"
-    enabled = var.enable_access_logs
-  }
-}
-
-resource "aws_lb_target_group" "web" {
-  name     = "${var.project_name}-${var.environment}-web-tg"
-  port     = 80
-  protocol = "HTTP"
-  vpc_id   = var.vpc_id
-
-  health_check {
-    enabled             = true
-    healthy_threshold   = 2
-    interval            = 30
-    matcher             = "200"
-    path                = "/health"
-    port                = "traffic-port"
-    protocol            = "HTTP"
-    timeout             = 5
-    unhealthy_threshold = 2
-  }
-}
-
-resource "aws_lb_listener" "web" {
-  load_balancer_arn = aws_lb.web.arn
-  port              = "80"
-  protocol          = "HTTP"
-
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.web.arn
-  }
-}
-
-# Auto Scaling Policies
-resource "aws_autoscaling_policy" "scale_up" {
-  name                   = "${var.project_name}-${var.environment}-scale-up"
-  scaling_adjustment     = 2
-  adjustment_type        = "ChangeInCapacity"
-  cooldown               = 300
-  autoscaling_group_name = aws_autoscaling_group.web.name
-}
-
-resource "aws_autoscaling_policy" "scale_down" {
-  name                   = "${var.project_name}-${var.environment}-scale-down"
-  scaling_adjustment     = -1
-  adjustment_type        = "ChangeInCapacity"
-  cooldown               = 300
-  autoscaling_group_name = aws_autoscaling_group.web.name
-}
-
-# CloudWatch Alarms
-resource "aws_cloudwatch_metric_alarm" "cpu_high" {
-  alarm_name          = "${var.project_name}-${var.environment}-cpu-high"
-  comparison_operator = "GreaterThanThreshold"
-  evaluation_periods  = "2"
-  metric_name         = "CPUUtilization"
-  namespace           = "AWS/EC2"
-  period              = "120"
-  statistic           = "Average"
-  threshold           = "70"
-  alarm_description   = "This metric monitors ec2 cpu utilization"
-  alarm_actions       = [aws_autoscaling_policy.scale_up.arn]
-
-  dimensions = {
-    AutoScalingGroupName = aws_autoscaling_group.web.name
-  }
-}
-
-resource "aws_cloudwatch_metric_alarm" "cpu_low" {
-  alarm_name          = "${var.project_name}-${var.environment}-cpu-low"
-  comparison_operator = "LessThanThreshold"
-  evaluation_periods  = "2"
-  metric_name         = "CPUUtilization"
-  namespace           = "AWS/EC2"
-  period              = "120"
-  statistic           = "Average"
-  threshold           = "20"
-  alarm_description   = "This metric monitors ec2 cpu utilization"
-  alarm_actions       = [aws_autoscaling_policy.scale_down.arn]
-
-  dimensions = {
-    AutoScalingGroupName = aws_autoscaling_group.web.name
-  }
-}
-
-# Data Sources
-data "aws_ami" "amazon_linux" {
-  most_recent = true
-  owners      = ["amazon"]
-
-  filter {
-    name   = "name"
-    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-}
-```
-
-### Script de User Data
+### Debugging y Troubleshooting
 
 ```bash
-#!/bin/bash
-# modules/ec2/user-data.sh
+# Ver eventos del cluster
+kubectl get events --sort-by=.metadata.creationTimestamp
 
-# Update system
-yum update -y
+# Verificar recursos del nodo
+kubectl top nodes
+kubectl top pods
 
-# Install required packages
-yum install -y httpd htop awscli amazon-cloudwatch-agent
+# Debugging de networking
+kubectl exec -it nginx-pod -- nslookup kubernetes.default
+kubectl exec -it nginx-pod -- wget -qO- http://nginx-service
 
-# Install Docker
-amazon-linux-extras install docker -y
-systemctl start docker
-systemctl enable docker
-usermod -a -G docker ec2-user
+# Obtener configuración en YAML
+kubectl get deployment nginx-deployment -o yaml
+kubectl get pod nginx-pod -o json
 
-# Configure Apache
-systemctl start httpd
-systemctl enable httpd
+# Editar recursos en vivo (no recomendado para producción)
+kubectl edit deployment nginx-deployment
+kubectl patch deployment nginx-deployment -p '{"spec":{"replicas":5}}'
+```
 
-# Create a simple health check endpoint
-cat <<EOF > /var/www/html/health
-OK
-EOF
+## 🔒 ConfigMaps y Secrets
 
-# Create index page
-cat <<EOF > /var/www/html/index.html
-<!DOCTYPE html>
-<html>
-<head>
-    <title>${project_name} - ${environment}</title>
-</head>
-<body>
-    <h1>Welcome to ${project_name}</h1>
-    <p>Environment: ${environment}</p>
-    <p>Instance ID: $(curl -s http://169.254.169.254/latest/meta-data/instance-id)</p>
-    <p>Availability Zone: $(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone)</p>
-</body>
-</html>
-EOF
+### ConfigMaps para Configuración
 
-# Configure CloudWatch agent
-cat <<EOF > /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json
-{
-    "metrics": {
-        "namespace": "${project_name}/${environment}",
-        "metrics_collected": {
-            "cpu": {
-                "measurement": [
-                    "cpu_usage_idle",
-                    "cpu_usage_iowait",
-                    "cpu_usage_user",
-                    "cpu_usage_system"
-                ],
-                "metrics_collection_interval": 60
-            },
-            "disk": {
-                "measurement": [
-                    "used_percent"
-                ],
-                "metrics_collection_interval": 60,
-                "resources": [
-                    "*"
-                ]
-            },
-            "mem": {
-                "measurement": [
-                    "mem_used_percent"
-                ],
-                "metrics_collection_interval": 60
-            }
-        }
-    },
-    "logs": {
-        "logs_collected": {
-            "files": {
-                "collect_list": [
-                    {
-                        "file_path": "/var/log/httpd/access_log",
-                        "log_group_name": "/aws/ec2/${project_name}/${environment}/httpd/access",
-                        "log_stream_name": "{instance_id}"
-                    },
-                    {
-                        "file_path": "/var/log/httpd/error_log",
-                        "log_group_name": "/aws/ec2/${project_name}/${environment}/httpd/error",
-                        "log_stream_name": "{instance_id}"
-                    }
-                ]
-            }
+```yaml
+# configmap-example.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  database_url: "postgresql://db:5432/myapp"
+  debug_mode: "false"
+  max_connections: "100"
+  config.properties: |
+    server.port=8080
+    server.host=0.0.0.0
+    logging.level=INFO
+  nginx.conf: |
+    upstream backend {
+        server backend-service:8080;
+    }
+    server {
+        listen 80;
+        location / {
+            proxy_pass http://backend;
         }
     }
-}
-EOF
-
-# Start CloudWatch agent
-systemctl start amazon-cloudwatch-agent
-systemctl enable amazon-cloudwatch-agent
 ```
 
-## 🔧 Ansible: Configuration Management
-
-### Instalación y Configuración
+### Secrets para Datos Sensibles
 
 ```bash
-# Instalar Ansible en Ubuntu/Debian
-sudo apt update
-sudo apt install software-properties-common
-sudo add-apt-repository --yes --update ppa:ansible/ansible
-sudo apt install ansible
+# Crear secrets desde línea de comandos
+kubectl create secret generic app-secrets \
+  --from-literal=database-password='supersecret123' \
+  --from-literal=api-key='abc123xyz'
+
+# Crear secret desde archivos
+kubectl create secret generic ssl-certs \
+  --from-file=tls.crt=path/to/cert.crt \
+  --from-file=tls.key=path/to/cert.key
+
+# Secret para registry privado
+kubectl create secret docker-registry regcred \
+  --docker-server=your-registry.com \
+  --docker-username=your-username \
+  --docker-password=your-password \
+  --docker-email=your-email@example.com
+```
+
+```yaml
+# secret-example.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app-secrets
+type: Opaque
+data:
+  database-password: c3VwZXJzZWNyZXQxMjM=  # base64 encoded
+  api-key: YWJjMTIzeHl6  # base64 encoded
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: app
+        image: myapp:latest
+        env:
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: database-password
+        - name: DATABASE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: database_url
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+        - name: secret-volume
+          mountPath: /etc/secrets
+          readOnly: true
+      volumes:
+      - name: config-volume
+        configMap:
+          name: app-config
+      - name: secret-volume
+        secret:
+          secretName: app-secrets
+```
+
+## 🌐 Ingress y Networking
+
+### Ingress Controller Setup
+
+```bash
+# Instalar NGINX Ingress Controller
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.1/deploy/static/provider/cloud/deploy.yaml
 
 # Verificar instalación
-ansible --version
-
-# Configurar SSH keys para acceso sin contraseña
-ssh-keygen -t rsa -b 4096 -C "ansible@mycompany.com"
-ssh-copy-id user@target-server
+kubectl get pods -n ingress-nginx
+kubectl get services -n ingress-nginx
 ```
 
-### Estructura de Proyecto Ansible
+### Configuración de Ingress
+
+```yaml
+# ingress-example.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/rate-limit: "100"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+  - hosts:
+    - myapp.example.com
+    - api.example.com
+    secretName: app-tls-secret
+  rules:
+  - host: myapp.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend-service
+            port:
+              number: 80
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: backend-service
+            port:
+              number: 8080
+  - host: api.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: api-service
+            port:
+              number: 3000
+```
+
+### Network Policies (Seguridad de Red)
+
+```yaml
+# network-policy-example.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-all-ingress
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-frontend-to-backend
+spec:
+  podSelector:
+    matchLabels:
+      app: backend
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: frontend
+    ports:
+    - protocol: TCP
+      port: 8080
+```
+
+## 📊 Persistent Volumes y Storage
+
+### Persistent Volume y Claims
+
+```yaml
+# storage-example.yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-pv
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: fast-ssd
+  hostPath:
+    path: /data/mysql
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: fast-ssd
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:8.0
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: password
+        volumeMounts:
+        - name: mysql-storage
+          mountPath: /var/lib/mysql
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+      volumes:
+      - name: mysql-storage
+        persistentVolumeClaim:
+          claimName: mysql-pvc
+```
+
+## ⚡ Horizontal Pod Autoscaler (HPA)
+
+```yaml
+# hpa-example.yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: nginx-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: nginx-deployment
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+      - type: Percent
+        value: 10
+        periodSeconds: 60
+    scaleUp:
+      stabilizationWindowSeconds: 0
+      policies:
+      - type: Percent
+        value: 100
+        periodSeconds: 15
+      - type: Pods
+        value: 4
+        periodSeconds: 60
+      selectPolicy: Max
+```
+
+## 🔐 RBAC y Seguridad
+
+### Role-Based Access Control
+
+```yaml
+# rbac-example.yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: app-service-account
+  namespace: production
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: pod-reader
+  namespace: production
+rules:
+- apiGroups: [""]
+  resources: ["pods", "pods/log"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list", "watch", "update", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pod-reader-binding
+  namespace: production
+subjects:
+- kind: ServiceAccount
+  name: app-service-account
+  namespace: production
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cluster-reader
+rules:
+- apiGroups: [""]
+  resources: ["nodes", "namespaces"]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: cluster-reader-binding
+subjects:
+- kind: ServiceAccount
+  name: app-service-account
+  namespace: production
+roleRef:
+  kind: ClusterRole
+  name: cluster-reader
+  apiGroup: rbac.authorization.k8s.io
+```
+
+### Pod Security Standards
+
+```yaml
+# pod-security-example.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: secure-namespace
+  labels:
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/audit: restricted
+    pod-security.kubernetes.io/warn: restricted
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: secure-app
+  namespace: secure-namespace
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: secure-app
+  template:
+    metadata:
+      labels:
+        app: secure-app
+    spec:
+      serviceAccountName: app-service-account
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 3000
+        fsGroup: 2000
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: app
+        image: nginx:1.21
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 1000
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: tmp-volume
+          mountPath: /tmp
+        - name: cache-volume
+          mountPath: /var/cache/nginx
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+      volumes:
+      - name: tmp-volume
+        emptyDir: {}
+      - name: cache-volume
+        emptyDir: {}
+```
+
+## 🎯 Helm: Package Manager para Kubernetes
+
+### Instalación de Helm
 
 ```bash
-ansible-infrastructure/
-├── inventories/
-│   ├── dev/
-│   │   ├── group_vars/
-│   │   │   ├── all.yml
-│   │   │   └── webservers.yml
-│   │   ├── host_vars/
-│   │   └── hosts.yml
-│   ├── staging/
-│   └── prod/
-├── roles/
-│   ├── common/
-│   │   ├── tasks/main.yml
-│   │   ├── handlers/main.yml
-│   │   ├── vars/main.yml
-│   │   ├── defaults/main.yml
-│   │   └── templates/
-│   ├── webserver/
-│   ├── database/
-│   └── monitoring/
-├── playbooks/
-│   ├── site.yml
-│   ├── webservers.yml
-│   └── database.yml
-├── group_vars/
-├── host_vars/
-├── ansible.cfg
-└── requirements.yml
+# Instalar Helm
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+# Verificar instalación
+helm version
+
+# Agregar repositorios populares
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
 ```
 
-### Configuración de Ansible
-
-```ini
-# ansible.cfg
-[defaults]
-inventory = inventories/prod/hosts.yml
-remote_user = ansible
-host_key_checking = False
-retry_files_enabled = False
-gathering = smart
-fact_caching = memory
-stdout_callback = yaml
-bin_ansible_callbacks = True
-
-[inventory]
-enable_plugins = host_list, script, auto, yaml, ini, toml
-
-[ssh_connection]
-ssh_args = -o ControlMaster=auto -o ControlPersist=60s
-pipelining = True
-control_path = /tmp/ansible-ssh-%%h-%%p-%%r
-```
-
-### Inventario Dinámico
-
-```yaml
-# inventories/prod/hosts.yml
-all:
-  children:
-    webservers:
-      hosts:
-        web01:
-          ansible_host: 10.0.1.10
-          server_role: primary
-        web02:
-          ansible_host: 10.0.1.11
-          server_role: secondary
-        web03:
-          ansible_host: 10.0.1.12
-          server_role: secondary
-      vars:
-        nginx_port: 80
-        ssl_enabled: true
-        
-    databases:
-      hosts:
-        db01:
-          ansible_host: 10.0.2.10
-          mysql_role: master
-        db02:
-          ansible_host: 10.0.2.11
-          mysql_role: slave
-      vars:
-        mysql_port: 3306
-        mysql_root_password: "{{ vault_mysql_root_password }}"
-        
-    loadbalancers:
-      hosts:
-        lb01:
-          ansible_host: 10.0.1.5
-          lb_role: primary
-        lb02:
-          ansible_host: 10.0.1.6
-          lb_role: backup
-      vars:
-        haproxy_stats_enabled: true
-        
-  vars:
-    environment: production
-    datacenter: us-west-2
-    monitoring_enabled: true
-```
-
-### Role Completo para Web Server
-
-```yaml
-# roles/webserver/tasks/main.yml
----
-- name: Update system packages
-  package:
-    name: '*'
-    state: latest
-  when: ansible_os_family == "RedHat"
-
-- name: Install required packages
-  package:
-    name:
-      - nginx
-      - certbot
-      - python3-certbot-nginx
-      - htop
-      - curl
-      - wget
-    state: present
-
-- name: Create nginx user
-  user:
-    name: nginx
-    system: yes
-    shell: /bin/false
-    home: /var/cache/nginx
-    createhome: no
-
-- name: Create web directories
-  file:
-    path: "{{ item }}"
-    state: directory
-    owner: nginx
-    group: nginx
-    mode: '0755'
-  loop:
-    - /var/www/html
-    - /var/log/nginx
-    - /etc/nginx/conf.d
-    - /etc/nginx/ssl
-
-- name: Generate nginx configuration
-  template:
-    src: nginx.conf.j2
-    dest: /etc/nginx/nginx.conf
-    owner: root
-    group: root
-    mode: '0644'
-    backup: yes
-  notify: restart nginx
-
-- name: Generate virtual host configuration
-  template:
-    src: vhost.conf.j2
-    dest: "/etc/nginx/conf.d/{{ item.name }}.conf"
-    owner: root
-    group: root
-    mode: '0644'
-  loop: "{{ nginx_vhosts }}"
-  notify: restart nginx
-
-- name: Create index.html
-  template:
-    src: index.html.j2
-    dest: /var/www/html/index.html
-    owner: nginx
-    group: nginx
-    mode: '0644'
-
-- name: Configure firewall
-  firewalld:
-    port: "{{ item }}"
-    permanent: yes
-    state: enabled
-    immediate: yes
-  loop:
-    - "80/tcp"
-    - "443/tcp"
-  when: ansible_os_family == "RedHat"
-
-- name: Generate SSL certificates
-  command: >
-    certbot --nginx -d {{ item.server_name }}
-    --non-interactive --agree-tos --email {{ ssl_email }}
-  loop: "{{ nginx_vhosts }}"
-  when: ssl_enabled and item.ssl | default(true)
-
-- name: Start and enable nginx
-  systemd:
-    name: nginx
-    state: started
-    enabled: yes
-
-- name: Configure log rotation
-  template:
-    src: nginx-logrotate.j2
-    dest: /etc/logrotate.d/nginx
-    owner: root
-    group: root
-    mode: '0644'
-
-- name: Setup nginx monitoring
-  template:
-    src: nginx-status.conf.j2
-    dest: /etc/nginx/conf.d/status.conf
-    owner: root
-    group: root
-    mode: '0644'
-  notify: restart nginx
-  when: monitoring_enabled
-```
-
-### Templates Nginx
-
-```nginx
-# roles/webserver/templates/nginx.conf.j2
-user nginx;
-worker_processes auto;
-error_log /var/log/nginx/error.log;
-pid /run/nginx.pid;
-
-events {
-    worker_connections 1024;
-    use epoll;
-    multi_accept on;
-}
-
-http {
-    log_format main '$remote_addr - $remote_user [$time_local] "$request" '
-                   '$status $body_bytes_sent "$http_referer" '
-                   '"$http_user_agent" "$http_x_forwarded_for"';
-
-    access_log /var/log/nginx/access.log main;
-
-    sendfile on;
-    tcp_nopush on;
-    tcp_nodelay on;
-    keepalive_timeout 65;
-    types_hash_max_size 2048;
-    server_tokens off;
-
-    include /etc/nginx/mime.types;
-    default_type application/octet-stream;
-
-    # Gzip compression
-    gzip on;
-    gzip_vary on;
-    gzip_min_length 1024;
-    gzip_proxied any;
-    gzip_comp_level 6;
-    gzip_types text/plain text/css text/xml text/javascript
-               application/javascript application/xml+rss application/json;
-
-    # Security headers
-    add_header X-Frame-Options DENY;
-    add_header X-Content-Type-Options nosniff;
-    add_header X-XSS-Protection "1; mode=block";
-    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
-
-    # Rate limiting
-    limit_req_zone $binary_remote_addr zone=login:10m rate=10r/m;
-    limit_req_zone $binary_remote_addr zone=api:10m rate=100r/m;
-
-    include /etc/nginx/conf.d/*.conf;
-}
-```
-
-```nginx
-# roles/webserver/templates/vhost.conf.j2
-server {
-    listen 80;
-    server_name {{ item.server_name }};
-    
-    {% if ssl_enabled and item.ssl | default(true) %}
-    return 301 https://$server_name$request_uri;
-}
-
-server {
-    listen 443 ssl http2;
-    server_name {{ item.server_name }};
-    
-    ssl_certificate /etc/letsencrypt/live/{{ item.server_name }}/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/{{ item.server_name }}/privkey.pem;
-    ssl_protocols TLSv1.2 TLSv1.3;
-    ssl_prefer_server_ciphers on;
-    ssl_ciphers ECDHE-RSA-AES256-GCM-SHA512:DHE-RSA-AES256-GCM-SHA512:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384;
-    ssl_session_cache shared:SSL:10m;
-    ssl_session_timeout 10m;
-    {% endif %}
-
-    root {{ item.document_root | default('/var/www/html') }};
-    index index.html index.htm index.php;
-
-    # Security
-    location ~ /\. {
-        deny all;
-    }
-
-    # API rate limiting
-    location /api/ {
-        limit_req zone=api burst=20 nodelay;
-        proxy_pass {{ item.backend_url }};
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-
-    # Static files
-    location ~* \.(jpg|jpeg|png|gif|ico|css|js)$ {
-        expires 1y;
-        add_header Cache-Control "public, immutable";
-    }
-
-    # Default location
-    location / {
-        try_files $uri $uri/ =404;
-    }
-
-    # Health check
-    location /health {
-        access_log off;
-        return 200 "healthy\n";
-        add_header Content-Type text/plain;
-    }
-}
-```
-
-### Handlers
-
-```yaml
-# roles/webserver/handlers/main.yml
----
-- name: restart nginx
-  systemd:
-    name: nginx
-    state: restarted
-
-- name: reload nginx
-  systemd:
-    name: nginx
-    state: reloaded
-
-- name: restart firewalld
-  systemd:
-    name: firewalld
-    state: restarted
-```
-
-### Variables
-
-```yaml
-# roles/webserver/defaults/main.yml
----
-nginx_port: 80
-ssl_enabled: true
-ssl_email: admin@example.com
-monitoring_enabled: true
-
-nginx_vhosts:
-  - name: default
-    server_name: "{{ ansible_fqdn }}"
-    document_root: /var/www/html
-    ssl: true
-    backend_url: "http://127.0.0.1:8080"
-
-nginx_user: nginx
-nginx_group: nginx
-
-# Security settings
-nginx_remove_default_vhost: true
-nginx_server_tokens: "off"
-
-# Performance settings
-nginx_worker_processes: "auto"
-nginx_worker_connections: 1024
-nginx_multi_accept: "on"
-```
-
-### Playbook Principal
-
-```yaml
-# playbooks/site.yml
----
-- name: Configure all infrastructure
-  hosts: all
-  become: yes
-  gather_facts: yes
-  
-  pre_tasks:
-    - name: Update package cache
-      package:
-        update_cache: yes
-      when: ansible_os_family in ['Debian', 'RedHat']
-
-  roles:
-    - common
-
-- name: Configure web servers
-  hosts: webservers
-  become: yes
-  
-  roles:
-    - webserver
-    - monitoring
-
-- name: Configure database servers
-  hosts: databases
-  become: yes
-  
-  roles:
-    - database
-    - monitoring
-
-- name: Configure load balancers
-  hosts: loadbalancers
-  become: yes
-  
-  roles:
-    - loadbalancer
-    - monitoring
-
-  post_tasks:
-    - name: Verify all services are running
-      uri:
-        url: "http://{{ ansible_default_ipv4.address }}/health"
-        method: GET
-        status_code: 200
-      delegate_to: localhost
-      when: inventory_hostname in groups['webservers']
-```
-
-## 🔐 Gestión de Secrets con Ansible Vault
+### Crear un Helm Chart
 
 ```bash
-# Crear archivo de secrets
-ansible-vault create group_vars/all/vault.yml
+# Crear nuevo chart
+helm create myapp
 
-# Editar archivo encriptado
-ansible-vault edit group_vars/all/vault.yml
-
-# Encriptar archivo existente
-ansible-vault encrypt group_vars/all/secrets.yml
-
-# Desencriptar archivo
-ansible-vault decrypt group_vars/all/secrets.yml
-
-# Ver contenido encriptado
-ansible-vault view group_vars/all/vault.yml
-
-# Ejecutar playbook con vault
-ansible-playbook site.yml --ask-vault-pass
-ansible-playbook site.yml --vault-password-file ~/.vault_pass
+# Estructura del chart
+myapp/
+├── Chart.yaml
+├── values.yaml
+├── templates/
+│   ├── deployment.yaml
+│   ├── service.yaml
+│   ├── ingress.yaml
+│   └── _helpers.tpl
+└── charts/
 ```
+
+### Chart.yaml
 
 ```yaml
-# group_vars/all/vault.yml (encriptado)
----
-vault_mysql_root_password: "super_secure_password_123"
-vault_database_user_password: "another_secure_password_456"
-vault_ssl_certificate_key: |
-  -----BEGIN PRIVATE KEY-----
-  MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC...
-  -----END PRIVATE KEY-----
-vault_api_tokens:
-  monitoring: "token_abc123"
-  backup: "token_def456"
+# Chart.yaml
+apiVersion: v2
+name: myapp
+description: A Helm chart for MyApp
+version: 0.1.0
+appVersion: "1.0.0"
+keywords:
+  - web
+  - application
+home: https://myapp.example.com
+maintainers:
+  - name: Harol Reina
+    email: harol@example.com
+dependencies:
+  - name: postgresql
+    version: 12.x.x
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled
 ```
 
-## 🚀 CI/CD para Infrastructure as Code
-
-### GitHub Actions para Terraform
+### values.yaml
 
 ```yaml
-# .github/workflows/terraform.yml
-name: 'Terraform Infrastructure'
+# values.yaml
+replicaCount: 3
 
-on:
-  push:
-    branches: [ main, develop ]
-    paths: [ 'terraform/**' ]
-  pull_request:
-    branches: [ main ]
-    paths: [ 'terraform/**' ]
+image:
+  repository: myapp
+  tag: "1.0.0"
+  pullPolicy: IfNotPresent
 
-jobs:
-  terraform:
-    name: 'Terraform'
-    runs-on: ubuntu-latest
-    environment: production
+service:
+  type: ClusterIP
+  port: 80
 
-    defaults:
-      run:
-        shell: bash
-        working-directory: ./terraform
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+  hosts:
+    - host: myapp.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: myapp-tls
+      hosts:
+        - myapp.example.com
 
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
 
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v2
-      with:
-        terraform_version: 1.5.0
-        terraform_wrapper: false
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
 
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v2
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-west-2
-
-    - name: Terraform Format
-      id: fmt
-      run: terraform fmt -check -recursive
-      continue-on-error: true
-
-    - name: Terraform Init
-      id: init
-      run: terraform init
-
-    - name: Terraform Validate
-      id: validate
-      run: terraform validate -no-color
-
-    - name: Terraform Plan
-      id: plan
-      if: github.event_name == 'pull_request'
-      run: terraform plan -no-color -input=false
-      continue-on-error: true
-
-    - name: Update Pull Request
-      uses: actions/github-script@v6
-      if: github.event_name == 'pull_request'
-      env:
-        PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
-          #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
-          #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
-          #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
-
-          <details><summary>Show Plan</summary>
-
-          \`\`\`\n
-          ${process.env.PLAN}
-          \`\`\`
-
-          </details>
-
-          *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
-
-          github.rest.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: output
-          })
-
-    - name: Terraform Plan Status
-      if: steps.plan.outcome == 'failure'
-      run: exit 1
-
-    - name: Terraform Apply
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform apply -auto-approve -input=false
-
-  security-scan:
-    name: 'Security Scan'
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-
-    - name: Run Trivy vulnerability scanner
-      uses: aquasecurity/trivy-action@master
-      with:
-        scan-type: 'config'
-        scan-ref: './terraform'
-        format: 'sarif'
-        output: 'trivy-results.sarif'
-
-    - name: Upload Trivy scan results to GitHub Security tab
-      uses: github/codeql-action/upload-sarif@v2
-      with:
-        sarif_file: 'trivy-results.sarif'
-
-  cost-estimation:
-    name: 'Cost Estimation'
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-    steps:
-    - name: Setup Infracost
-      uses: infracost/actions/setup@v2
-      with:
-        api-key: ${{ secrets.INFRACOST_API_KEY }}
-
-    - name: Checkout base branch
-      uses: actions/checkout@v3
-      with:
-        ref: '${{ github.event.pull_request.base.ref }}'
-
-    - name: Generate Infracost cost estimate baseline
-      run: |
-        infracost breakdown --path=./terraform \
-                            --format=json \
-                            --out-file=/tmp/infracost-base.json
-
-    - name: Checkout PR branch
-      uses: actions/checkout@v3
-
-    - name: Generate Infracost diff
-      run: |
-        infracost diff --path=./terraform \
-                       --format=json \
-                       --compare-to=/tmp/infracost-base.json \
-                       --out-file=/tmp/infracost.json
-
-    - name: Post Infracost comment
-      run: |
-        infracost comment github --path=/tmp/infracost.json \
-                                 --repo=$GITHUB_REPOSITORY \
-                                 --github-token=${{github.token}} \
-                                 --pull-request=${{github.event.pull_request.number}} \
-                                 --behavior=update
+postgresql:
+  enabled: true
+  auth:
+    postgresPassword: "supersecret"
+    database: "myapp"
 ```
 
-### Jenkins Pipeline para Ansible
+### Desplegar con Helm
 
-```groovy
-// Jenkinsfile
-pipeline {
-    agent any
-    
-    environment {
-        ANSIBLE_HOST_KEY_CHECKING = 'False'
-        ANSIBLE_VAULT_PASSWORD_FILE = credentials('ansible-vault-password')
-    }
-    
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-        
-        stage('Lint') {
-            steps {
-                sh '''
-                    ansible-lint playbooks/
-                    yamllint -d relaxed .
-                '''
-            }
-        }
-        
-        stage('Syntax Check') {
-            steps {
-                sh '''
-                    ansible-playbook playbooks/site.yml \
-                        --syntax-check \
-                        --inventory inventories/staging/hosts.yml
-                '''
-            }
-        }
-        
-        stage('Dry Run') {
-            when {
-                branch 'develop'
-            }
-            steps {
-                sh '''
-                    ansible-playbook playbooks/site.yml \
-                        --check \
-                        --diff \
-                        --inventory inventories/staging/hosts.yml \
-                        --vault-password-file $ANSIBLE_VAULT_PASSWORD_FILE
-                '''
-            }
-        }
-        
-        stage('Deploy to Staging') {
-            when {
-                branch 'develop'
-            }
-            steps {
-                sh '''
-                    ansible-playbook playbooks/site.yml \
-                        --inventory inventories/staging/hosts.yml \
-                        --vault-password-file $ANSIBLE_VAULT_PASSWORD_FILE \
-                        --tags "deploy"
-                '''
-            }
-        }
-        
-        stage('Deploy to Production') {
-            when {
-                branch 'main'
-            }
-            steps {
-                input message: 'Deploy to production?', ok: 'Deploy'
-                sh '''
-                    ansible-playbook playbooks/site.yml \
-                        --inventory inventories/prod/hosts.yml \
-                        --vault-password-file $ANSIBLE_VAULT_PASSWORD_FILE \
-                        --limit "!maintenance" \
-                        --tags "deploy"
-                '''
-            }
-        }
-        
-        stage('Verify Deployment') {
-            steps {
-                sh '''
-                    ansible-playbook playbooks/verify.yml \
-                        --inventory inventories/${BRANCH_NAME == 'main' ? 'prod' : 'staging'}/hosts.yml
-                '''
-            }
-        }
-    }
-    
-    post {
-        always {
-            publishHTML([
-                allowMissing: false,
-                alwaysLinkToLastBuild: true,
-                keepAll: true,
-                reportDir: 'reports',
-                reportFiles: 'ansible-report.html',
-                reportName: 'Ansible Report'
-            ])
-        }
-        
-        failure {
-            slackSend channel: '#devops',
-                     color: 'danger',
-                     message: "❌ Infrastructure deployment failed: ${env.JOB_NAME} - ${env.BUILD_NUMBER}"
-        }
-        
-        success {
-            slackSend channel: '#devops',
-                     color: 'good',
-                     message: "✅ Infrastructure deployment successful: ${env.JOB_NAME} - ${env.BUILD_NUMBER}"
-        }
-    }
-}
+```bash
+# Instalar chart
+helm install myapp ./myapp -f values-production.yaml
+
+# Actualizar release
+helm upgrade myapp ./myapp -f values-production.yaml
+
+# Ver releases
+helm list
+
+# Ver historial
+helm history myapp
+
+# Rollback
+helm rollback myapp 1
+
+# Desinstalar
+helm uninstall myapp
 ```
 
 ## 📊 Monitoreo y Observabilidad
 
-### Terraform para Stack de Monitoreo
+### Deploying Prometheus Stack
 
-```hcl
-# monitoring.tf
-resource "aws_instance" "prometheus" {
-  ami           = data.aws_ami.amazon_linux.id
-  instance_type = "t3.medium"
-  subnet_id     = var.private_subnet_ids[0]
-  vpc_security_group_ids = [aws_security_group.monitoring.id]
-  
-  user_data = base64encode(templatefile("${path.module}/prometheus-setup.sh", {
-    grafana_password = var.grafana_admin_password
-  }))
+```bash
+# Instalar Prometheus Stack con Helm
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
 
-  tags = {
-    Name = "prometheus-server"
-    Role = "monitoring"
-  }
-}
+helm install prometheus prometheus-community/kube-prometheus-stack \
+  --namespace monitoring \
+  --create-namespace \
+  --set grafana.adminPassword=admin123
+```
 
-resource "aws_security_group" "monitoring" {
-  name        = "monitoring-sg"
-  description = "Security group for monitoring stack"
-  vpc_id      = var.vpc_id
+### Custom Metrics y ServiceMonitor
 
-  ingress {
-    from_port   = 9090
-    to_port     = 9090
-    protocol    = "tcp"
-    cidr_blocks = [var.vpc_cidr]
-  }
+```yaml
+# servicemonitor-example.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: myapp-monitor
+  labels:
+    app: myapp
+spec:
+  selector:
+    matchLabels:
+      app: myapp
+  endpoints:
+  - port: metrics
+    interval: 30s
+    path: /metrics
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-metrics
+  labels:
+    app: myapp
+spec:
+  ports:
+  - name: metrics
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: myapp
+```
 
-  ingress {
-    from_port   = 3000
-    to_port     = 3000
-    protocol    = "tcp"
-    cidr_blocks = [var.vpc_cidr]
-  }
+## 🚀 CI/CD con Kubernetes
 
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
+### GitOps con ArgoCD
 
-resource "aws_cloudwatch_dashboard" "main" {
-  dashboard_name = "${var.project_name}-${var.environment}-dashboard"
+```yaml
+# argocd-application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: myapp
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/mycompany/myapp-manifests
+    targetRevision: HEAD
+    path: k8s/overlays/production
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: production
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+```
 
-  dashboard_body = jsonencode({
-    widgets = [
-      {
-        type   = "metric"
-        x      = 0
-        y      = 0
-        width  = 12
-        height = 6
+### Pipeline con Tekton
 
-        properties = {
-          metrics = [
-            ["AWS/EC2", "CPUUtilization", "InstanceId", aws_instance.prometheus.id],
-            [".", "NetworkIn", ".", "."],
-            [".", "NetworkOut", ".", "."]
-          ]
-          view    = "timeSeries"
-          stacked = false
-          region  = var.aws_region
-          title   = "EC2 Instance Metrics"
-          period  = 300
-        }
-      }
-    ]
-  })
-}
+```yaml
+# tekton-pipeline.yaml
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: build-and-deploy
+spec:
+  params:
+  - name: git-url
+    type: string
+  - name: image-name
+    type: string
+  tasks:
+  - name: fetch-source
+    taskRef:
+      name: git-clone
+    params:
+    - name: url
+      value: $(params.git-url)
+  - name: build-image
+    taskRef:
+      name: buildah
+    runAfter:
+    - fetch-source
+    params:
+    - name: IMAGE
+      value: $(params.image-name)
+  - name: deploy-to-cluster
+    taskRef:
+      name: kubectl-deploy
+    runAfter:
+    - build-image
+    params:
+    - name: image
+      value: $(params.image-name)
 ```
 
 ## 🛡️ Mejores Prácticas de Seguridad
 
-### Terraform Security Scanning
+### Security Checklist
 
 ```bash
-# Instalar tfsec
-curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh | bash
+# 1. Actualizar cluster regularmente
+kubectl version
+kubeadm upgrade plan
 
-# Escanear código Terraform
-tfsec .
+# 2. Escanear imágenes de contenedores
+trivy image nginx:1.21
 
-# Configurar reglas custom
-cat > .tfsec/config.yml << EOF
-severity_overrides:
-  AWS018: ERROR
-  AWS002: WARNING
+# 3. Verificar configuraciones de seguridad
+kubectl get pods -o jsonpath='{.items[*].spec.securityContext}'
 
-exclude:
-  - AWS001  # S3 bucket without server-side encryption
+# 4. Auditar RBAC
+kubectl auth can-i --list --as=system:serviceaccount:default:myapp
 
-minimum_severity: MEDIUM
-EOF
+# 5. Verificar network policies
+kubectl get networkpolicies -A
 
-# Integrar con pre-commit
-cat > .pre-commit-config.yaml << EOF
-repos:
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
-    hooks:
-      - id: trailing-whitespace
-      - id: end-of-file-fixer
-      - id: check-yaml
-  
-  - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.81.0
-    hooks:
-      - id: terraform_fmt
-      - id: terraform_validate
-      - id: terraform_tflint
-      - id: terraform_tfsec
-EOF
+# 6. Rotar certificates
+kubeadm certs check-expiration
 ```
 
-### Policy as Code con OPA
+### Hardening de Cluster
 
-```rego
-# policies/terraform.rego
-package terraform.security
+```yaml
+# admission-controller-config.yaml
+apiVersion: apiserver.config.k8s.io/v1
+kind: AdmissionConfiguration
+plugins:
+- name: PodSecurity
+  configuration:
+    apiVersion: pod-security.admission.config.k8s.io/v1beta1
+    kind: PodSecurityConfiguration
+    defaults:
+      enforce: "restricted"
+      enforce-version: "latest"
+      audit: "restricted"
+      audit-version: "latest"
+      warn: "restricted"
+      warn-version: "latest"
+    exemptions:
+      usernames: []
+      runtimeClasses: []
+      namespaces: [kube-system, kube-public, kube-node-lease]
+```
 
-deny[msg] {
-    resource := input.planned_values.root_module.resources[_]
-    resource.type == "aws_s3_bucket"
-    not resource.values.server_side_encryption_configuration
-    msg := sprintf("S3 bucket '%s' does not have encryption enabled", [resource.address])
-}
+## 🔧 Troubleshooting Avanzado
 
-deny[msg] {
-    resource := input.planned_values.root_module.resources[_]
-    resource.type == "aws_security_group"
-    rule := resource.values.ingress[_]
-    rule.from_port == 22
-    "0.0.0.0/0" in rule.cidr_blocks
-    msg := sprintf("Security group '%s' allows SSH access from anywhere", [resource.address])
-}
+### Debugging de Pods
 
-deny[msg] {
-    resource := input.planned_values.root_module.resources[_]
-    resource.type == "aws_instance"
-    not resource.values.monitoring
-    msg := sprintf("EC2 instance '%s' does not have monitoring enabled", [resource.address])
-}
+```bash
+# Ver todos los eventos
+kubectl get events --sort-by=.metadata.creationTimestamp
+
+# Debug de pods que no inician
+kubectl describe pod problema-pod
+kubectl logs problema-pod --previous
+
+# Ejecutar pod de debug
+kubectl run debug-pod --image=busybox --rm -it -- /bin/sh
+
+# Verificar DNS
+kubectl run dns-test --image=busybox --rm -it -- nslookup kubernetes.default
+
+# Verificar conectividad de red
+kubectl run network-test --image=nicolaka/netshoot --rm -it -- /bin/bash
+```
+
+### Performance Tuning
+
+```bash
+# Ver métricas de recursos
+kubectl top nodes
+kubectl top pods --all-namespaces
+
+# Verificar límites de recursos
+kubectl describe node <node-name> | grep -A 5 "Allocated resources"
+
+# Optimizar etcd
+etcdctl --endpoints=<etcd-endpoints> defrag
+etcdctl --endpoints=<etcd-endpoints> alarm list
+```
+
+## 🎯 Casos de Uso Empresariales
+
+### Microservicios E-commerce
+
+```yaml
+# ecommerce-namespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ecommerce
+  labels:
+    name: ecommerce
+---
+# Frontend Service
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: ecommerce
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+---
+# API Gateway
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+  namespace: ecommerce
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: api-gateway
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      containers:
+      - name: api-gateway
+        image: traefik:v2.9
+        ports:
+        - containerPort: 8080
+```
+
+### Data Pipeline con Kafka
+
+```yaml
+# kafka-cluster.yaml
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+  name: my-cluster
+spec:
+  kafka:
+    version: 3.4.0
+    replicas: 3
+    listeners:
+      - name: plain
+        port: 9092
+        type: internal
+        tls: false
+      - name: tls
+        port: 9093
+        type: internal
+        tls: true
+    config:
+      offsets.topic.replication.factor: 3
+      transaction.state.log.replication.factor: 3
+      transaction.state.log.min.isr: 2
+    storage:
+      type: jbod
+      volumes:
+      - id: 0
+        type: persistent-claim
+        size: 100Gi
+        deleteClaim: false
+  zookeeper:
+    replicas: 3
+    storage:
+      type: persistent-claim
+      size: 10Gi
+      deleteClaim: false
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}
 ```
 
 ## Conclusión
 
-**Infrastructure as Code** representa una **evolución fundamental** en la gestión de infraestructura moderna. Esta guía completa te proporciona:
+**Kubernetes** representa el futuro de la orquestación de contenedores y es una **herramienta fundamental** para cualquier DevOps Engineer moderno. Esta guía te proporciona:
 
-- **🏗️ Fundamentos sólidos** con Terraform y Ansible
-- **🔧 Implementaciones prácticas** para entornos empresariales
-- **🚀 CI/CD integration** con pipelines automatizados
-- **🛡️ Seguridad enterprise** con scanning y policies
-- **📊 Observabilidad completa** con monitoreo integrado
-- **🎯 Casos de uso reales** y arquitecturas escalables
+- **🏗️ Fundamentos sólidos** desde instalación hasta configuración avanzada
+- **🛠️ Herramientas prácticas** con ejemplos reales de producción  
+- **🔒 Seguridad enterprise** con RBAC, network policies y hardening
+- **📊 Observabilidad completa** con Prometheus, Grafana y métricas custom
+- **🚀 CI/CD integration** con GitOps y pipelines automatizados
+- **🎯 Casos de uso reales** para aplicaciones empresariales
 
 **Beneficios implementados:**
-- Infraestructura versionada y reproducible
-- Despliegues automatizados y consistentes
-- Rollback rápido ante problemas
-- Compliance y auditoría automatizada
-- Optimización continua de costos
-
-**Tecnologías dominaras:**
-- **Terraform**: Provisioning declarativo multi-cloud
-- **Ansible**: Configuration management y automatización
-- **GitOps**: Workflows basados en Git
-- **Policy as Code**: Seguridad y compliance automatizada
-- **Monitoring as Code**: Observabilidad integrada
+- Escalabilidad automática y gestión de recursos
+- Alta disponibilidad con self-healing
+- Seguridad avanzada y compliance
+- Portabilidad multi-cloud
+- DevOps workflows optimizados
 
 **Próximos pasos recomendados:**
-- Implementar Terraform Cloud/Enterprise
+- Implementar service mesh con Istio
 - Explorar Kubernetes operators
-- Integrar con service mesh
-- Automatizar disaster recovery
-- Optimizar arquitecturas serverless
+- Configurar disaster recovery
+- Optimizar costos con cluster autoscaling
+- Integrar con herramientas de ML/AI
 
-Con estas herramientas y prácticas, estás preparado para gestionar infraestructura de cualquier escala con la **confianza y eficiencia** que demanda el entorno empresarial moderno. ¡La automatización de infraestructura nunca fue tan poderosa! 🚀
+Con este conocimiento, estás preparado para gestionar clusters de Kubernetes en cualquier entorno empresarial. ¡La orquestación de contenedores nunca fue tan poderosa! 🚀
 
 **Recursos adicionales:**
-- [Terraform Registry](https://registry.terraform.io/)
-- [Ansible Galaxy](https://galaxy.ansible.com/)
-- [AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-architected/)
-- [HashiCorp Learn](https://learn.hashicorp.com/)
+- [Documentación oficial de Kubernetes](https://kubernetes.io/docs/)
+- [Kubernetes GitHub](https://github.com/kubernetes/kubernetes)
+- [CNCF Landscape](https://landscape.cncf.io/)
+- [Kubernetes Academy](https://kubernetes.academy/)
