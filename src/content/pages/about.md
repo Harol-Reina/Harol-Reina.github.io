@@ -2,13 +2,13 @@
 title: Sobre Mí
 seo:
   title: Sobre Mí - Harol Reina
-  description: Conoce más sobre Harol Reina, DevOps Engineer y Backend Developer especializado en .NET, Python, Linux y automatización. Descubre mi trayectoria profesional y pasión por la tecnología.
+  description: Conoce más sobre Harol Reina, DevOps Engineer y Backend Developer especializado en .NET, Python, Linux y automatización.
   image:
     src: '/about.jpeg'
     alt: Harol Reina - DevOps Engineer trabajando en automatización
 ---
 
-![Harol Reina - DevOps Engineer](/about.jpeg)
+<!-- ![Harol Reina - DevOps Engineer](/about.jpeg) -->
 
 ## Harol Reina - DevOps Engineer & Backend Developer
 
